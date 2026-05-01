@@ -7,7 +7,8 @@ import {
   Trophy, 
   Video, 
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  GraduationCap
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
