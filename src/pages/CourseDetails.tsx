@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -38,7 +39,6 @@ const COURSES = [
       "Atomic Structure & Orbitals"
     ]
   },
-  // ... other courses would be here in a real app
 ];
 
 const CourseDetails = () => {
@@ -46,12 +46,10 @@ const CourseDetails = () => {
   const navigate = useNavigate();
   const [isEnrolling, setIsEnrolling] = useState(false);
   
-  // For demo purposes, we'll just use the first course if ID matches or default
   const course = COURSES.find(c => c.id === Number(id)) || COURSES[0];
 
   const handleEnroll = () => {
     setIsEnrolling(true);
-    // Simulate payment/enrollment process
     setTimeout(() => {
       showSuccess(`Successfully enrolled in ${course.title}!`);
       navigate('/student');
@@ -69,7 +67,6 @@ const CourseDetails = () => {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Left Column: Course Info */}
           <div className="lg:col-span-2 space-y-8">
             <div>
               <Badge className="bg-violet-100 text-violet-600 font-bold border-none px-4 py-1 rounded-full mb-4">
@@ -130,7 +127,6 @@ const CourseDetails = () => {
             </div>
           </div>
 
-          {/* Right Column: Enrollment Card */}
           <div className="lg:col-span-1">
             <Card className="sticky top-32 border-none shadow-2xl shadow-violet-100/50 rounded-[2.5rem] overflow-hidden bg-white/80 backdrop-blur-xl">
               <CardContent className="p-8">
@@ -183,6 +179,8 @@ const CourseDetails = () => {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };

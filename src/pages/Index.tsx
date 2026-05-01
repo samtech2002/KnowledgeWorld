@@ -1,12 +1,9 @@
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { MadeWithDyad } from "@/components/made-with-dyad";
 import { 
   BookOpen, 
-  Users, 
-  Trophy, 
   Video, 
-  ArrowRight,
   GraduationCap,
   Sparkles,
   ShieldCheck,
@@ -21,7 +18,6 @@ const Index = () => {
       
       {/* Hero Section */}
       <section className="relative pt-40 pb-32 px-4 overflow-hidden">
-        {/* Background Decorative Elements */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
           <div className="absolute top-20 left-10 w-72 h-72 bg-violet-200/40 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl animate-pulse delay-700"></div>
@@ -131,26 +127,7 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="py-20 border-t border-violet-50 bg-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="p-2 bg-violet-600 rounded-lg">
-              <GraduationCap className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-2xl font-black tracking-tighter">KNOWLEDGEWORLD</span>
-          </div>
-          <p className="text-gray-400 font-bold text-sm mb-10 tracking-widest uppercase">Empowering the next generation of innovators</p>
-          <div className="flex justify-center gap-8 mb-12">
-            {['Twitter', 'LinkedIn', 'Instagram', 'YouTube'].map((social) => (
-              <a key={social} href="#" className="text-gray-400 hover:text-violet-600 font-bold transition-colors">{social}</a>
-            ))}
-          </div>
-          <div className="pt-8 border-t border-gray-50">
-            <p className="text-gray-400 text-sm mb-4">© 2024 KnowledgeWorld. All rights reserved.</p>
-            <MadeWithDyad />
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
