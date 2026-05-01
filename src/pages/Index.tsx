@@ -42,12 +42,16 @@ const Index = () => {
             KnowledgeWorld.in combines cutting-edge technology with India's top educators to deliver a learning experience that's as effective as it is engaging.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Button size="lg" className="bg-violet-600 hover:bg-violet-700 text-white px-10 h-16 text-xl font-bold rounded-2xl shadow-2xl shadow-violet-200 transition-all hover:scale-105">
-              Start Free Trial <Rocket className="ml-2 h-6 w-6" />
-            </Button>
-            <Button size="lg" variant="outline" className="px-10 h-16 text-xl font-bold rounded-2xl border-2 border-violet-100 bg-white hover:bg-violet-50 transition-all">
-              Explore Courses
-            </Button>
+            <Link to="/courses">
+              <Button size="lg" className="bg-violet-600 hover:bg-violet-700 text-white px-10 h-16 text-xl font-bold rounded-2xl shadow-2xl shadow-violet-200 transition-all hover:scale-105">
+                Start Free Trial <Rocket className="ml-2 h-6 w-6" />
+              </Button>
+            </Link>
+            <Link to="/courses">
+              <Button size="lg" variant="outline" className="px-10 h-16 text-xl font-bold rounded-2xl border-2 border-violet-100 bg-white hover:bg-violet-50 transition-all">
+                Explore Courses
+              </Button>
+            </Link>
           </div>
           
           <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-12 max-w-5xl mx-auto">

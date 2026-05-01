@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Courses from "./pages/Courses";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import StudentDashboard from "./pages/student/StudentDashboard";
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/courses" element={<Courses />} />
           
           {/* Role-based Dashboards */}
           <Route path="/admin/*" element={<AdminDashboard />} />
