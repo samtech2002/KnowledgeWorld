@@ -7,7 +7,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/60 backdrop-blur-xl border-b border-violet-100/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-violet-50/70 backdrop-blur-xl border-b border-violet-100/50">
+      {/* Decorative Top Strip */}
+      <div className="h-1 w-full bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400"></div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           <Link to="/" className="flex items-center gap-2 group cursor-pointer">
@@ -24,7 +27,7 @@ const Navbar = () => {
             <Link to="/courses" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Courses</Link>
             <Link to="/#about" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">About</Link>
             <Link to="/login">
-              <Button variant="ghost" className="text-violet-600 hover:bg-violet-50 font-bold">
+              <Button variant="ghost" className="text-violet-600 hover:bg-violet-100/50 font-bold">
                 Login
               </Button>
             </Link>
