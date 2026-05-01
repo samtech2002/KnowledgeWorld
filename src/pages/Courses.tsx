@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from "@/components/layout/Navbar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -93,6 +94,7 @@ const COURSES = [
 ];
 
 const Courses = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -198,7 +200,10 @@ const Courses = () => {
                 <div className="text-2xl font-black text-violet-600">
                   {course.price}
                 </div>
-                <Button className="bg-violet-50 text-violet-600 hover:bg-violet-600 hover:text-white font-bold rounded-xl transition-all">
+                <Button 
+                  onClick={() => navigate(`/course/${course.id}`)}
+                  className="bg-violet-50 text-violet-600 hover:bg-violet-600 hover:text-white font-bold rounded-xl transition-all"
+                >
                   Enroll Now <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
               </CardFooter>
