@@ -15,7 +15,8 @@ import {
   ShieldCheck,
   ArrowLeft,
   Zap,
-  Lock
+  Lock,
+  Calendar
 } from "lucide-react";
 import { showSuccess } from "@/utils/toast";
 
@@ -46,7 +47,8 @@ const COURSES = [
     category: "Computer",
     rating: 4.8,
     students: "20.1k",
-    duration: "80h 00m",
+    duration: "3 Months",
+    schedule: "Monday to Friday Live Class",
     price: "₹1,700",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
     description: "The Certificate Course on Computer Concepts (CCC) is designed to impart basic level IT literacy to common man. This course is essential for anyone looking to understand computers, operating systems, and digital financial tools.",
@@ -165,8 +167,14 @@ const CourseDetails = () => {
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center gap-3 text-gray-600 font-medium">
                     <Clock className="h-5 w-5 text-violet-500" />
-                    <span>Full lifetime access</span>
+                    <span>{course.duration} access</span>
                   </div>
+                  {course.schedule && (
+                    <div className="flex items-center gap-3 text-gray-600 font-medium">
+                      <Calendar className="h-5 w-5 text-violet-500" />
+                      <span>{course.schedule}</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-3 text-gray-600 font-medium">
                     <FileText className="h-5 w-5 text-violet-500" />
                     <span>20 Downloadable resources</span>

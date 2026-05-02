@@ -75,7 +75,7 @@ const COURSES = [
     category: "Computer",
     rating: 4.8,
     students: "20.1k",
-    duration: "80h 00m",
+    duration: "3 Months",
     price: "₹1,700",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
     level: "Beginner"
