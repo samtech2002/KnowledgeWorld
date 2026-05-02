@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import CreateCourse from "./pages/teacher/CreateCourse";
 import StudentDashboard from "./pages/student/StudentDashboard";
+import Exam from "./pages/student/Exam";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,7 +34,8 @@ const App = () => (
           <Route path="/admin/*" element={<AdminDashboard />} />
           <Route path="/teacher" element={<TeacherDashboard />} />
           <Route path="/teacher/create" element={<CreateCourse />} />
-          <Route path="/student/*" element={<StudentDashboard />} />
+          <Route path="/student" element={<StudentDashboard />} />
+          <Route path="/student/exam" element={<Exam />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>
