@@ -51,6 +51,38 @@ const EXAM_DATA = {
       options: ["x", "2x", "x^2", "2"],
       correct: "2x"
     }
+  ],
+  "CCC (Computer Concepts)": [
+    {
+      id: 1,
+      question: "What is the full form of CCC?",
+      options: ["Course on Computer Concepts", "Computer Core Course", "Common Computer Center", "Central Computer Course"],
+      correct: "Course on Computer Concepts"
+    },
+    {
+      id: 2,
+      question: "Which of the following is an output device?",
+      options: ["Keyboard", "Mouse", "Monitor", "Scanner"],
+      correct: "Monitor"
+    },
+    {
+      id: 3,
+      question: "What is the shortcut key for 'Undo' in Windows?",
+      options: ["Ctrl + C", "Ctrl + V", "Ctrl + Z", "Ctrl + X"],
+      correct: "Ctrl + Z"
+    },
+    {
+      id: 4,
+      question: "Which protocol is used for sending emails?",
+      options: ["HTTP", "FTP", "SMTP", "IP"],
+      correct: "SMTP"
+    },
+    {
+      id: 5,
+      question: "What is the brain of the computer?",
+      options: ["RAM", "CPU", "Hard Disk", "Monitor"],
+      correct: "CPU"
+    }
   ]
 };
 
