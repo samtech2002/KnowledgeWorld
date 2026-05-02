@@ -52,6 +52,66 @@ const EXAM_DATA = {
       correct: "2x"
     }
   ],
+  "Biology": [
+    {
+      id: 1,
+      question: "Which organelle is known as the powerhouse of the cell?",
+      options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi Apparatus"],
+      correct: "Mitochondria"
+    },
+    {
+      id: 2,
+      question: "What is the process by which plants make their own food?",
+      options: ["Respiration", "Transpiration", "Photosynthesis", "Digestion"],
+      correct: "Photosynthesis"
+    },
+    {
+      id: 3,
+      question: "How many pairs of chromosomes are there in a human cell?",
+      options: ["22", "23", "46", "44"],
+      correct: "23"
+    }
+  ],
+  "Chemistry": [
+    {
+      id: 1,
+      question: "What is the atomic number of Carbon?",
+      options: ["6", "12", "14", "8"],
+      correct: "6"
+    },
+    {
+      id: 2,
+      question: "Which gas is most abundant in the Earth's atmosphere?",
+      options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
+      correct: "Nitrogen"
+    },
+    {
+      id: 3,
+      question: "What is the pH of pure water?",
+      options: ["0", "1", "7", "14"],
+      correct: "7"
+    }
+  ],
+  "English (Maharashtra)": [
+    {
+      id: 1,
+      question: "Who is the author of the prose 'An Astrologer's Day'?",
+      options: ["R.K. Narayan", "Mulkh Raj Anand", "Rabindranath Tagore", "Sarojini Naidu"],
+      correct: "R.K. Narayan"
+    },
+    {
+      id: 2,
+      question: "Identify the figure of speech: 'The camel is the ship of the desert.'",
+      options: ["Simile", "Metaphor", "Personification", "Alliteration"],
+      correct: "Metaphor"
+    },
+    {
+      id: 3,
+      question: "In the poem 'Song of the Open Road', what does the 'road' symbolize?",
+      options: ["A physical path", "Life's journey", "A destination", "Hardship"],
+      correct: "Life's journey"
+    }
+  ],
   "CCC (Computer Concepts)": [
     {
       id: 1,
@@ -70,18 +130,6 @@ const EXAM_DATA = {
       question: "What is the shortcut key for 'Undo' in Windows?",
       options: ["Ctrl + C", "Ctrl + V", "Ctrl + Z", "Ctrl + X"],
       correct: "Ctrl + Z"
-    },
-    {
-      id: 4,
-      question: "Which protocol is used for sending emails?",
-      options: ["HTTP", "FTP", "SMTP", "IP"],
-      correct: "SMTP"
-    },
-    {
-      id: 5,
-      question: "What is the brain of the computer?",
-      options: ["RAM", "CPU", "Hard Disk", "Monitor"],
-      correct: "CPU"
     }
   ]
 };
