@@ -25,7 +25,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-10">
             <Link to="/" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Home</Link>
             <Link to="/courses" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Courses</Link>
-            <Link to="/#about" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">About</Link>
+            <Link to="/syllabus" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Syllabus</Link>
             <Link to="/login">
               <Button variant="ghost" className="text-violet-600 hover:bg-violet-100/50 font-bold">
                 Login
@@ -51,6 +51,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white/95 backdrop-blur-xl border-b border-violet-100 p-6 space-y-6 animate-in slide-in-from-top duration-300">
           <Link to="/" className="block text-lg font-bold text-gray-800">Home</Link>
           <Link to="/courses" className="block text-lg font-bold text-gray-800">Courses</Link>
+          <Link to="/syllabus" className="block text-lg font-bold text-gray-800">Syllabus</Link>
           <Link to="/login" className="block text-lg font-bold text-violet-600">Login</Link>
           <Link to="/courses" className="block">
             <Button className="w-full bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-bold h-12 rounded-xl">Get Started</Button>
