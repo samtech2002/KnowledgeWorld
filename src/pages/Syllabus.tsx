@@ -14,7 +14,9 @@ import {
   Dna, 
   Zap,
   Languages,
-  Monitor
+  Monitor,
+  Video,
+  Play
 } from "lucide-react";
 
 const SYLLABUS_DATA = {
@@ -82,11 +84,33 @@ const SYLLABUS_DATA = {
   }
 };
 
+const VIDEO_LECTURES = {
+  "Physics": [
+    { title: "Introduction to Mechanics", duration: "15:20", id: "p7bzE1E5PMY" },
+    { title: "Laws of Motion Deep Dive", duration: "22:45", id: "L9X75Xf_6_Y" }
+  ],
+  "Chemistry": [
+    { title: "Atomic Structure Basics", duration: "18:10", id: "p7bzE1E5PMY" },
+    { title: "Chemical Bonding Explained", duration: "25:30", id: "L9X75Xf_6_Y" }
+  ],
+  "Mathematics": [
+    { title: "Calculus Fundamentals", duration: "30:15", id: "p7bzE1E5PMY" },
+    { title: "Algebraic Identities", duration: "20:00", id: "L9X75Xf_6_Y" }
+  ],
+  "Biology": [
+    { title: "Cell Biology 101", duration: "12:40", id: "p7bzE1E5PMY" },
+    { title: "Human Physiology Intro", duration: "28:15", id: "L9X75Xf_6_Y" }
+  ],
+  "CCC": [
+    { title: "Computer Basics for Beginners", duration: "10:00", id: "p7bzE1E5PMY" },
+    { title: "Internet & Web Browsing", duration: "15:50", id: "L9X75Xf_6_Y" }
+  ]
+};
+
 const Syllabus = () => {
   const [examType, setExamType] = useState<keyof typeof SYLLABUS_DATA>("jee");
   const [selectedSubject, setSelectedSubject] = useState<string>("Physics");
 
-  // Reset subject when exam type changes
   const handleExamTypeChange = (value: string) => {
     const type = value as keyof typeof SYLLABUS_DATA;
     setExamType(type);
@@ -94,6 +118,7 @@ const Syllabus = () => {
   };
 
   const currentSyllabus = SYLLABUS_DATA[examType][selectedSubject as keyof typeof SYLLABUS_DATA['jee']];
+  const currentVideos = VIDEO_LECTURES[selectedSubject as keyof typeof VIDEO_LECTURES] || [];
 
   const getSubjectIcon = (subject: string) => {
     if (subject.includes("English")) return <Languages className="h-5 w-5" />;
@@ -131,7 +156,7 @@ const Syllabus = () => {
             Exam <span className="text-gradient">Syllabus Guide</span>
           </h1>
           <p className="text-gray-500 font-medium text-lg max-w-2xl mx-auto">
-            Master every topic with our structured curriculum for India's toughest competitive exams and state boards.
+            Master every topic with our structured curriculum and expert video lectures.
           </p>
         </div>
 
@@ -151,7 +176,6 @@ const Syllabus = () => {
             </TabsTrigger>
           </TabsList>
 
-          {/* Subject Selector */}
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {Object.keys(SYLLABUS_DATA[examType]).map((subject) => (
               <Button
@@ -170,18 +194,15 @@ const Syllabus = () => {
             ))}
           </div>
 
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="grid gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-6">
               <div className={`rounded-[2rem] p-8 text-white mb-4 flex items-center justify-between overflow-hidden relative ${getThemeColor()}`}>
                 <div className="relative z-10">
                   <h2 className="text-2xl font-black mb-2">
-                    {examType === 'maharashtra' ? 'Maharashtra Board' : examType === 'computer' ? 'Computer Concepts' : examType.toUpperCase()} {selectedSubject} Mastery
+                    {selectedSubject} Curriculum
                   </h2>
                   <p className="text-white/90 font-medium opacity-90">
-                    {examType === "jee" && "Focus on conceptual depth and advanced problem-solving."}
-                    {examType === "neet" && "Emphasis on fundamental concepts and speed-accuracy balance."}
-                    {examType === "maharashtra" && "Comprehensive coverage of the state board curriculum and language skills."}
-                    {examType === "computer" && "Essential digital literacy skills for the modern world."}
+                    Comprehensive topic-wise breakdown for {selectedSubject}.
                   </p>
                 </div>
                 <div className="opacity-10 absolute -right-4 -bottom-4 scale-150">
@@ -216,6 +237,40 @@ const Syllabus = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+
+            <div className="space-y-6">
+              <Card className="border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl sticky top-32">
+                <CardHeader className="bg-violet-50/50 border-b border-violet-100">
+                  <CardTitle className="text-xl font-black flex items-center gap-2">
+                    <Video className="h-5 w-5 text-violet-600" />
+                    Video Lectures
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6 space-y-4">
+                  {currentVideos.length > 0 ? currentVideos.map((video, i) => (
+                    <div key={i} className="group p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-violet-200 hover:bg-white transition-all cursor-pointer">
+                      <div className="flex items-center gap-4">
+                        <div className="h-12 w-12 rounded-xl bg-violet-600 flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform">
+                          <Play className="h-5 w-5 fill-current" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-black text-gray-900 text-sm line-clamp-1">{video.title}</div>
+                          <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">{video.duration} • HD</div>
+                        </div>
+                      </div>
+                    </div>
+                  )) : (
+                    <div className="text-center py-8">
+                      <Video className="h-12 w-12 text-gray-200 mx-auto mb-3" />
+                      <p className="text-sm font-bold text-gray-400">No videos available for this subject yet.</p>
+                    </div>
+                  )}
+                  <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-black h-12 rounded-xl shadow-lg shadow-violet-100 mt-4">
+                    View All Lectures
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </Tabs>

@@ -31,6 +31,7 @@ const COURSES = [
     duration: "24h 15m",
     price: "₹2,499",
     image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=800",
+    videoUrl: "https://www.youtube.com/embed/p7bzE1E5PMY", // Example Physics Video
     description: "Master the fundamental principles of quantum mechanics, from wave-particle duality to Schrödinger's equation. This course is designed for advanced students looking to excel in theoretical physics.",
     curriculum: [
       "Introduction to Quantum World",
@@ -51,6 +52,7 @@ const COURSES = [
     schedule: "Monday to Friday Live Class",
     price: "₹1,700",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+    videoUrl: "https://www.youtube.com/embed/L9X75Xf_6_Y", // Example Computer Video
     description: "The Certificate Course on Computer Concepts (CCC) is designed to impart basic level IT literacy to common man. This course is essential for anyone looking to understand computers, operating systems, and digital financial tools.",
     curriculum: [
       "Introduction to Computer & OS",
@@ -68,6 +70,7 @@ const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isEnrolling, setIsEnrolling] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   
   const course = COURSES.find(c => c.id === Number(id)) || COURSES[0];
 
@@ -116,13 +119,32 @@ const CourseDetails = () => {
               </div>
             </div>
 
-            <div className="aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative group">
-              <img src={course.image} alt={course.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                <div className="p-6 bg-white/20 backdrop-blur-md rounded-full cursor-pointer hover:scale-110 transition-transform">
-                  <PlayCircle className="h-16 w-16 text-white" />
-                </div>
-              </div>
+            <div className="aspect-video rounded-[2.5rem] overflow-hidden shadow-2xl relative group bg-black">
+              {!isPlaying ? (
+                <>
+                  <img src={course.image} alt={course.title} className="w-full h-full object-cover opacity-80" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button 
+                      onClick={() => setIsPlaying(true)}
+                      className="p-6 bg-white/20 backdrop-blur-md rounded-full cursor-pointer hover:scale-110 transition-transform group-hover:bg-white/30"
+                    >
+                      <PlayCircle className="h-16 w-16 text-white" />
+                    </button>
+                  </div>
+                  <div className="absolute bottom-6 left-6 text-white font-black text-lg drop-shadow-md">
+                    Watch Course Preview
+                  </div>
+                </>
+              ) : (
+                <iframe 
+                  className="w-full h-full"
+                  src={`${course.videoUrl}?autoplay=1`}
+                  title="Course Preview"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              )}
             </div>
 
             <div className="space-y-6">
