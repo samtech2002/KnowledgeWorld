@@ -41,6 +41,13 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { showSuccess } from "@/utils/toast";
 
@@ -65,6 +72,7 @@ const AdminDashboard = () => {
   const [students, setStudents] = useState(INITIAL_STUDENTS);
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<any>(null);
   
   const [subscriptions, setSubscriptions] = useState({
@@ -98,6 +106,30 @@ const AdminDashboard = () => {
     setCourses([newCourse, ...courses]);
     setIsAddDialogOpen(false);
     showSuccess("New course added successfully!");
+  };
+
+  const handleRegisterStudent = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const plan = formData.get('plan') as string;
+    const amount = plan === 'Monthly' ? subscriptions.monthly : 
+                   plan === 'Quarterly' ? subscriptions.quarterly :
+                   plan === 'Half-Yearly' ? subscriptions.halfYearly :
+                   plan === 'Yearly' ? subscriptions.yearly : "0";
+
+    const newStudent = {
+      id: Date.now(),
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      plan: plan,
+      status: "Active",
+      joinDate: new Date().toISOString().split('T')[0],
+      expiryDate: "2025-01-01", // Simplified for demo
+      amount: amount
+    };
+    setStudents([newStudent, ...students]);
+    setIsRegisterDialogOpen(false);
+    showSuccess(`${newStudent.name} has been registered and enrolled!`);
   };
 
   const handleEditCourse = (e: React.FormEvent<HTMLFormElement>) => {
@@ -301,9 +333,48 @@ const AdminDashboard = () => {
                   <h1 className="text-4xl font-black text-gray-900 mb-2">Student Management</h1>
                   <p className="text-gray-500 font-medium">Monitor student progress and subscription details.</p>
                 </div>
-                <Button className="bg-gradient-to-r from-violet-600 to-cyan-600 hover:opacity-90 text-white font-black px-8 h-14 rounded-2xl shadow-xl shadow-violet-200 transition-all hover:scale-105">
-                  <Plus className="mr-2 h-5 w-5" /> Register Student
-                </Button>
+                <Dialog open={isRegisterDialogOpen} onOpenChange={setIsRegisterDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-gradient-to-r from-violet-600 to-cyan-600 hover:opacity-90 text-white font-black px-8 h-14 rounded-2xl shadow-xl shadow-violet-200 transition-all hover:scale-105">
+                      <Plus className="mr-2 h-5 w-5" /> Register Student
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[500px] rounded-[2.5rem] p-10">
+                    <DialogHeader>
+                      <DialogTitle className="text-3xl font-black">Register New Student</DialogTitle>
+                      <CardDescription className="text-lg font-medium">Manually enroll a student into the platform.</CardDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleRegisterStudent} className="space-y-6 mt-6">
+                      <div className="space-y-2">
+                        <Label className="font-bold ml-1">Full Name</Label>
+                        <Input name="name" placeholder="e.g. John Doe" className="h-12 rounded-xl border-violet-100" required />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="font-bold ml-1">Email Address</Label>
+                        <Input name="email" type="email" placeholder="john@example.com" className="h-12 rounded-xl border-violet-100" required />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="font-bold ml-1">Subscription Plan</Label>
+                        <Select name="plan" defaultValue="Monthly">
+                          <SelectTrigger className="h-12 rounded-xl border-violet-100">
+                            <SelectValue placeholder="Select a plan" />
+                          </SelectTrigger>
+                          <SelectContent className="rounded-xl border-violet-50">
+                            <SelectItem value="Trial">Trial (7 Days)</SelectItem>
+                            <SelectItem value="Monthly">Monthly</SelectItem>
+                            <SelectItem value="Quarterly">Quarterly</SelectItem>
+                            <SelectItem value="Half-Yearly">Half-Yearly</SelectItem>
+                            <SelectItem value="Yearly">Yearly</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <DialogFooter className="pt-6">
+                        <Button type="button" variant="ghost" onClick={() => setIsRegisterDialogOpen(false)} className="rounded-xl font-bold">Cancel</Button>
+                        <Button type="submit" className="bg-violet-600 hover:bg-violet-700 text-white font-black px-8 h-12 rounded-xl shadow-lg shadow-violet-100">Enroll Student</Button>
+                      </DialogFooter>
+                    </form>
+                  </DialogContent>
+                </Dialog>
               </div>
 
               <Card className="border-none shadow-xl shadow-violet-100/30 rounded-[2.5rem] overflow-hidden bg-white/80 backdrop-blur-xl">
