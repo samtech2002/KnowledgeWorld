@@ -76,7 +76,7 @@ const COURSES = [
     rating: 4.8,
     students: "20.1k",
     duration: "80h 00m",
-    price: "₹599",
+    price: "₹1,700",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
     level: "Beginner"
   },

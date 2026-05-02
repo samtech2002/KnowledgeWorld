@@ -47,7 +47,7 @@ const COURSES = [
     rating: 4.8,
     students: "20.1k",
     duration: "80h 00m",
-    price: "₹599",
+    price: "₹1,700",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
     description: "The Certificate Course on Computer Concepts (CCC) is designed to impart basic level IT literacy to common man. This course is essential for anyone looking to understand computers, operating systems, and digital financial tools.",
     curriculum: [
