@@ -1,19 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Video, 
   FileText, 
   Users, 
   Calendar, 
-  Plus,
-  Clock,
-  LogOut
+  Plus, 
+  Clock, 
+  LogOut,
+  X,
+  CheckCircle2
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { showSuccess } from "@/utils/toast";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const TeacherDashboard = () => {
   const navigate = useNavigate();
+  const [activeClasses, setActiveClasses] = useState<number[]>([]);
+
+  const handleStartClass = (id: number, subject: string) => {
+    if (activeClasses.includes(id)) {
+      showSuccess(`Class "${subject}" is already live!`);
+      return;
+    }
+    setActiveClasses([...activeClasses, id]);
+    showSuccess(`Live session for ${subject} has started!`);
+  };
+
+  const schedule = [
+    { day: "Monday", classes: ["Physics (10:30 AM)", "Math (02:00 PM)"] },
+    { day: "Tuesday", classes: ["Physics (11:00 AM)", "Doubt Session (04:00 PM)"] },
+    { day: "Wednesday", classes: ["Math (10:30 AM)", "Advanced Physics (01:00 PM)"] },
+    { day: "Thursday", classes: ["Physics (10:30 AM)", "Math (02:00 PM)"] },
+    { day: "Friday", classes: ["Weekly Quiz (11:00 AM)", "Math (03:00 PM)"] },
+  ];
 
   return (
     <div className="min-h-screen bg-[#FAFAFF]">
@@ -47,13 +76,39 @@ const TeacherDashboard = () => {
             <p className="text-gray-500 font-medium">You have 2 live classes scheduled for today.</p>
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" className="rounded-xl font-bold border-violet-100 text-violet-600 bg-white">View Schedule</Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="rounded-xl font-bold border-violet-100 text-violet-600 bg-white">
+                  <Calendar className="mr-2 h-4 w-4" /> View Schedule
+                </Button>
+              </SheetTrigger>
+              <SheetContent className="w-[400px] sm:w-[540px] rounded-l-[2rem]">
+                <SheetHeader className="mb-8">
+                  <SheetTitle className="text-2xl font-black">Weekly Schedule</SheetTitle>
+                  <SheetDescription className="font-medium">Your upcoming teaching sessions for the week.</SheetDescription>
+                </SheetHeader>
+                <div className="space-y-6">
+                  {schedule.map((item, i) => (
+                    <div key={i} className="p-4 bg-violet-50/50 rounded-2xl border border-violet-100">
+                      <div className="font-black text-violet-600 mb-2 uppercase tracking-wider text-xs">{item.day}</div>
+                      <div className="space-y-2">
+                        {item.classes.map((cls, j) => (
+                          <div key={j} className="flex items-center gap-2 text-sm font-bold text-gray-700">
+                            <div className="h-1.5 w-1.5 rounded-full bg-cyan-500"></div>
+                            {cls}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
             <Button variant="outline" className="rounded-xl font-bold border-violet-100 text-violet-600 bg-white">Earnings</Button>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column: Stats & Active Courses */}
           <div className="lg:col-span-2 space-y-10">
             <div className="grid grid-cols-3 gap-6">
               {[
@@ -102,7 +157,6 @@ const TeacherDashboard = () => {
             </div>
           </div>
 
-          {/* Right Column: Upcoming Classes & Notifications */}
           <div className="space-y-10">
             <Card className="border-none shadow-xl shadow-violet-100/50 rounded-[2.5rem] bg-white/80 backdrop-blur-xl overflow-hidden">
               <CardHeader className="bg-violet-50/50 border-b border-violet-100/50">
@@ -113,17 +167,27 @@ const TeacherDashboard = () => {
               </CardHeader>
               <CardContent className="p-6 space-y-4">
                 {[
-                  { time: "10:30 AM", subject: "Physics - Optics", duration: "60 min" },
-                  { time: "02:00 PM", subject: "Math - Calculus", duration: "90 min" },
-                ].map((session, i) => (
-                  <div key={i} className="p-5 bg-[#F8F9FF] rounded-2xl border border-violet-50 group hover:border-violet-200 transition-all">
+                  { id: 1, time: "10:30 AM", subject: "Physics - Optics", duration: "60 min" },
+                  { id: 2, time: "02:00 PM", subject: "Math - Calculus", duration: "90 min" },
+                ].map((session) => (
+                  <div key={session.id} className="p-5 bg-[#F8F9FF] rounded-2xl border border-violet-50 group hover:border-violet-200 transition-all">
                     <div className="flex justify-between items-start mb-3">
-                      <span className="text-[10px] font-black text-white bg-gradient-to-r from-red-500 to-pink-500 px-2 py-0.5 rounded uppercase tracking-widest animate-pulse">Live</span>
+                      <span className={`text-[10px] font-black text-white px-2 py-0.5 rounded uppercase tracking-widest ${activeClasses.includes(session.id) ? 'bg-green-500' : 'bg-gradient-to-r from-red-500 to-pink-500 animate-pulse'}`}>
+                        {activeClasses.includes(session.id) ? 'Live Now' : 'Live'}
+                      </span>
                       <span className="text-xs font-bold text-gray-400 flex items-center gap-1"><Clock size={12} /> {session.time}</span>
                     </div>
                     <div className="font-black text-gray-900 mb-1">{session.subject}</div>
                     <div className="text-xs font-bold text-gray-400 mb-4">{session.duration} session</div>
-                    <Button size="sm" className="w-full bg-violet-600 hover:bg-violet-700 rounded-xl font-bold shadow-lg shadow-violet-100">Start Class</Button>
+                    <Button 
+                      size="sm" 
+                      onClick={() => handleStartClass(session.id, session.subject)}
+                      className={`w-full rounded-xl font-bold shadow-lg transition-all ${activeClasses.includes(session.id) ? 'bg-green-500 hover:bg-green-600' : 'bg-violet-600 hover:bg-violet-700 shadow-violet-100'}`}
+                    >
+                      {activeClasses.includes(session.id) ? (
+                        <span className="flex items-center gap-2"><CheckCircle2 size={16} /> Session Active</span>
+                      ) : 'Start Class'}
+                    </Button>
                   </div>
                 ))}
               </CardContent>

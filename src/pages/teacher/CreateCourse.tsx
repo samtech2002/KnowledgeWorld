@@ -5,7 +5,6 @@ import {
   Upload, 
   Plus, 
   Trash2, 
-  Save, 
   Rocket,
   BookOpen,
   Video,
@@ -17,12 +16,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
 import { showSuccess } from "@/utils/toast";
 
 const CreateCourse = () => {
   const navigate = useNavigate();
   const [isPublishing, setIsPublishing] = useState(false);
   const [curriculum, setCurriculum] = useState(['Introduction', 'Core Concepts']);
+  const [settings, setSettings] = useState({
+    certificate: true,
+    publicAccess: true
+  });
 
   const addLesson = () => setCurriculum([...curriculum, '']);
   const removeLesson = (index: number) => setCurriculum(curriculum.filter((_, i) => i !== index));
@@ -65,7 +69,6 @@ const CreateCourse = () => {
 
       <main className="max-w-5xl mx-auto p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
-          {/* Basic Info */}
           <Card className="border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl font-black flex items-center gap-2">
@@ -94,7 +97,6 @@ const CreateCourse = () => {
             </CardContent>
           </Card>
 
-          {/* Curriculum */}
           <Card className="border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl">
             <CardHeader className="pb-2">
               <CardTitle className="text-xl font-black flex items-center gap-2">
@@ -135,7 +137,6 @@ const CreateCourse = () => {
         </div>
 
         <div className="space-y-8">
-          {/* Media Upload */}
           <Card className="border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl">
             <CardHeader>
               <CardTitle className="text-lg font-black">Course Thumbnail</CardTitle>
@@ -151,29 +152,34 @@ const CreateCourse = () => {
             </CardContent>
           </Card>
 
-          {/* Settings */}
           <Card className="border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl">
             <CardHeader>
               <CardTitle className="text-lg font-black">Course Settings</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-violet-50/50 rounded-xl">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-violet-600" />
+              <div className="flex items-center justify-between p-4 bg-violet-50/50 rounded-2xl border border-violet-100">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white rounded-lg shadow-sm">
+                    <FileText className="h-4 w-4 text-violet-600" />
+                  </div>
                   <span className="text-sm font-bold text-gray-700">Certificate</span>
                 </div>
-                <div className="h-5 w-10 bg-violet-600 rounded-full relative">
-                  <div className="absolute right-1 top-1 h-3 w-3 bg-white rounded-full"></div>
-                </div>
+                <Switch 
+                  checked={settings.certificate} 
+                  onCheckedChange={(val) => setSettings({...settings, certificate: val})} 
+                />
               </div>
-              <div className="flex items-center justify-between p-3 bg-violet-50/50 rounded-xl">
-                <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-violet-600" />
+              <div className="flex items-center justify-between p-4 bg-violet-50/50 rounded-2xl border border-violet-100">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-white rounded-lg shadow-sm">
+                    <Users className="h-4 w-4 text-violet-600" />
+                  </div>
                   <span className="text-sm font-bold text-gray-700">Public Access</span>
                 </div>
-                <div className="h-5 w-10 bg-violet-600 rounded-full relative">
-                  <div className="absolute right-1 top-1 h-3 w-3 bg-white rounded-full"></div>
-                </div>
+                <Switch 
+                  checked={settings.publicAccess} 
+                  onCheckedChange={(val) => setSettings({...settings, publicAccess: val})} 
+                />
               </div>
             </CardContent>
           </Card>
