@@ -8,11 +8,13 @@ import Login from "./pages/Login";
 import Courses from "./pages/Courses";
 import CourseDetails from "./pages/CourseDetails";
 import Syllabus from "./pages/Syllabus";
+import Resources from "./pages/Resources";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import CreateCourse from "./pages/teacher/CreateCourse";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import Exam from "./pages/student/Exam";
+import DoubtHub from "./pages/student/DoubtHub";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +31,7 @@ const App = () => (
           <Route path="/courses" element={<Courses />} />
           <Route path="/course/:id" element={<CourseDetails />} />
           <Route path="/syllabus" element={<Syllabus />} />
+          <Route path="/resources" element={<Resources />} />
           
           {/* Role-based Dashboards */}
           <Route path="/admin/*" element={<AdminDashboard />} />
@@ -36,6 +39,7 @@ const App = () => (
           <Route path="/teacher/create" element={<CreateCourse />} />
           <Route path="/student" element={<StudentDashboard />} />
           <Route path="/student/exam" element={<Exam />} />
+          <Route path="/student/doubts" element={<DoubtHub />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>

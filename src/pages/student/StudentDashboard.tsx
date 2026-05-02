@@ -9,7 +9,8 @@ import {
   Search,
   Star,
   FileText,
-  LogOut
+  LogOut,
+  MessageSquare
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -30,7 +31,8 @@ const StudentDashboard = () => {
         <div className="flex items-center gap-6">
           <div className="hidden md:flex items-center gap-6 text-sm font-bold text-gray-500">
             <button className="hover:text-violet-600 transition-colors">My Courses</button>
-            <button onClick={() => navigate('/student/exam')} className="text-violet-600">Exams</button>
+            <button onClick={() => navigate('/student/exam')} className="hover:text-violet-600 transition-colors">Exams</button>
+            <button onClick={() => navigate('/student/doubts')} className="text-violet-600">Doubt Hub</button>
             <button className="hover:text-violet-600 transition-colors">Certificates</button>
           </div>
           <Button variant="ghost" size="icon" onClick={() => navigate('/login')} className="text-gray-400 hover:text-red-500">
@@ -107,6 +109,24 @@ const StudentDashboard = () => {
             <Card className="border-none shadow-xl shadow-violet-100/30 rounded-[2.5rem] bg-white/80 backdrop-blur-xl">
               <CardHeader className="p-8 pb-0">
                 <CardTitle className="text-xl font-black flex items-center gap-2">
+                  <MessageSquare className="h-6 w-6 text-violet-600" />
+                  Doubt Hub
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-8">
+                <p className="text-sm text-gray-500 font-medium mb-6">Stuck on a problem? Ask our expert teachers for help.</p>
+                <Button 
+                  onClick={() => navigate('/student/doubts')}
+                  className="w-full bg-violet-600 hover:bg-violet-700 text-white font-black h-12 rounded-xl shadow-lg shadow-violet-100"
+                >
+                  Ask a Doubt
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-xl shadow-violet-100/30 rounded-[2.5rem] bg-white/80 backdrop-blur-xl">
+              <CardHeader className="p-8 pb-0">
+                <CardTitle className="text-xl font-black flex items-center gap-2">
                   <Trophy className="h-6 w-6 text-yellow-500" />
                   Achievements
                 </CardTitle>
@@ -119,15 +139,6 @@ const StudentDashboard = () => {
                   <div>
                     <div className="text-sm font-black text-gray-900">7 Day Streak</div>
                     <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">You're on fire!</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 bg-violet-50/50 rounded-2xl border border-violet-100">
-                  <div className="h-12 w-12 rounded-2xl bg-violet-100 flex items-center justify-center">
-                    <CheckCircle2 className="h-6 w-6 text-violet-600" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-black text-gray-900">Quiz Master</div>
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">10 Quizzes completed</div>
                   </div>
                 </div>
               </CardContent>
@@ -155,12 +166,6 @@ const StudentDashboard = () => {
                     </Button>
                   </div>
                 ))}
-                <Button 
-                  onClick={() => navigate('/student/exam')}
-                  className="w-full bg-violet-50 text-violet-600 hover:bg-violet-600 hover:text-white font-black h-12 rounded-xl transition-all"
-                >
-                  View All Exams
-                </Button>
               </CardContent>
             </Card>
           </div>

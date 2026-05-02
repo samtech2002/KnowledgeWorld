@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Menu, X, Zap, BookOpen } from "lucide-react";
+import { GraduationCap, Menu, X, Zap, BookOpen, FileText } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -22,10 +22,13 @@ const Navbar = () => {
             </span>
           </Link>
           
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-8">
             <Link to="/" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Home</Link>
             <Link to="/courses" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Courses</Link>
             <Link to="/syllabus" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Syllabus</Link>
+            <Link to="/resources" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors flex items-center gap-1.5">
+              <FileText className="h-4 w-4" /> Resources
+            </Link>
             <Link to="/student/exam" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors flex items-center gap-1.5">
               <BookOpen className="h-4 w-4" /> Exam
             </Link>
@@ -55,6 +58,7 @@ const Navbar = () => {
           <Link to="/" className="block text-lg font-bold text-gray-800">Home</Link>
           <Link to="/courses" className="block text-lg font-bold text-gray-800">Courses</Link>
           <Link to="/syllabus" className="block text-lg font-bold text-gray-800">Syllabus</Link>
+          <Link to="/resources" className="block text-lg font-bold text-gray-800">Resources</Link>
           <Link to="/student/exam" className="block text-lg font-bold text-gray-800">Exam</Link>
           <Link to="/login" className="block text-lg font-bold text-violet-600">Login</Link>
           <Link to="/courses" className="block">
