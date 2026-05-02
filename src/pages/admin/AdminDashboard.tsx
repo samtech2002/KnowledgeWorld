@@ -17,13 +17,16 @@ import {
   MoreVertical,
   CheckCircle2,
   XCircle,
-  Filter
+  Filter,
+  Calendar,
+  Mail,
+  ShieldCheck,
+  Clock
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { 
   Dialog, 
   DialogContent, 
@@ -39,7 +42,7 @@ import {
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { showSuccess, showError } from "@/utils/toast";
+import { showSuccess } from "@/utils/toast";
 
 const INITIAL_COURSES = [
   { id: 1, title: "Quantum Mechanics Mastery", instructor: "Dr. Sarah Chen", category: "Physics", price: "2499", students: 12500, status: "Active" },
@@ -48,9 +51,18 @@ const INITIAL_COURSES = [
   { id: 3, title: "Organic Chemistry Simplified", instructor: "Dr. Amit Shah", category: "Chemistry", price: "1499", students: 5100, status: "Draft" },
 ];
 
+const INITIAL_STUDENTS = [
+  { id: 1, name: "Aryan Sharma", email: "aryan@example.com", plan: "Yearly", status: "Active", joinDate: "2023-10-01", expiryDate: "2024-10-01", amount: "4499" },
+  { id: 2, name: "Priya Patel", email: "priya@example.com", plan: "Monthly", status: "Active", joinDate: "2024-01-15", expiryDate: "2024-02-15", amount: "499" },
+  { id: 3, name: "Rahul Verma", email: "rahul@example.com", plan: "Quarterly", status: "Expired", joinDate: "2023-06-10", expiryDate: "2023-09-10", amount: "1299" },
+  { id: 4, name: "Anjali Gupta", email: "anjali@example.com", plan: "Trial", status: "Active", joinDate: "2024-01-20", expiryDate: "2024-01-27", amount: "0" },
+  { id: 5, name: "Siddharth Singh", email: "sid@example.com", plan: "Half-Yearly", status: "Active", joinDate: "2023-11-05", expiryDate: "2024-05-05", amount: "2499" },
+];
+
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("Overview");
   const [courses, setCourses] = useState(INITIAL_COURSES);
+  const [students, setStudents] = useState(INITIAL_STUDENTS);
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<any>(null);
@@ -113,6 +125,11 @@ const AdminDashboard = () => {
     c.instructor.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const filteredStudents = students.filter(s => 
+    s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    s.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-[#FAFAFF] flex">
       {/* Sidebar */}
@@ -126,7 +143,7 @@ const AdminDashboard = () => {
         <nav className="flex-1 p-6 space-y-2">
           {[
             { icon: <LayoutDashboard size={20} />, label: "Overview" },
-            { icon: <Users size={20} />, label: "Users" },
+            { icon: <Users size={20} />, label: "Students" },
             { icon: <BookOpen size={20} />, label: "Courses" },
             { icon: <CreditCard size={20} />, label: "Subscriptions" },
             { icon: <Bell size={20} />, label: "Notifications" },
@@ -163,8 +180,10 @@ const AdminDashboard = () => {
           <div className="relative w-96 group">
             <Search className="absolute left-4 top-3 h-5 w-5 text-gray-400 group-focus-within:text-violet-600 transition-colors" />
             <Input 
-              placeholder="Search analytics, users, courses..." 
+              placeholder="Search analytics, students, courses..." 
               className="pl-12 h-11 bg-violet-50/50 border-none rounded-xl focus:ring-2 focus:ring-violet-500 font-medium" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <div className="flex items-center gap-6">
@@ -219,18 +238,18 @@ const AdminDashboard = () => {
                   </CardHeader>
                   <CardContent className="p-8">
                     <div className="space-y-6">
-                      {[1, 2, 3, 4].map((_, i) => (
+                      {students.slice(0, 4).map((student, i) => (
                         <div key={i} className="flex items-center justify-between p-4 hover:bg-violet-50/50 rounded-2xl transition-all group">
                           <div className="flex items-center gap-4">
                             <div className="h-12 w-12 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-600 font-black group-hover:scale-110 transition-transform">
-                              {String.fromCharCode(65 + i)}
+                              {student.name.charAt(0)}
                             </div>
                             <div>
-                              <div className="font-black text-gray-900">Student Name {i + 1}</div>
-                              <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">Class 10 • Science</div>
+                              <div className="font-black text-gray-900">{student.name}</div>
+                              <div className="text-xs font-bold text-gray-400 uppercase tracking-wider">{student.plan} Plan</div>
                             </div>
                           </div>
-                          <div className="text-lg font-black text-violet-600">₹2,499</div>
+                          <div className="text-lg font-black text-violet-600">₹{student.amount}</div>
                         </div>
                       ))}
                     </div>
@@ -273,6 +292,102 @@ const AdminDashboard = () => {
                 </Card>
               </div>
             </>
+          )}
+
+          {activeTab === "Students" && (
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+                <div>
+                  <h1 className="text-4xl font-black text-gray-900 mb-2">Student Management</h1>
+                  <p className="text-gray-500 font-medium">Monitor student progress and subscription details.</p>
+                </div>
+                <Button className="bg-gradient-to-r from-violet-600 to-cyan-600 hover:opacity-90 text-white font-black px-8 h-14 rounded-2xl shadow-xl shadow-violet-200 transition-all hover:scale-105">
+                  <Plus className="mr-2 h-5 w-5" /> Register Student
+                </Button>
+              </div>
+
+              <Card className="border-none shadow-xl shadow-violet-100/30 rounded-[2.5rem] overflow-hidden bg-white/80 backdrop-blur-xl">
+                <div className="p-8 border-b border-violet-50 flex flex-col md:flex-row justify-between items-center gap-6">
+                  <div className="relative w-full md:w-96">
+                    <Search className="absolute left-4 top-3 h-5 w-5 text-gray-400" />
+                    <Input 
+                      placeholder="Search by name or email..." 
+                      className="pl-12 h-11 bg-violet-50/50 border-none rounded-xl font-medium"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button variant="outline" className="rounded-xl font-bold border-violet-100 text-gray-500">
+                      <Filter className="mr-2 h-4 w-4" /> Filter
+                    </Button>
+                    <Button variant="outline" className="rounded-xl font-bold border-violet-100 text-gray-500">Export CSV</Button>
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="bg-violet-50/50">
+                        <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Student</th>
+                        <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Plan</th>
+                        <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Status</th>
+                        <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Join Date</th>
+                        <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Expiry Date</th>
+                        <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-violet-50">
+                      {filteredStudents.map((student) => (
+                        <tr key={student.id} className="hover:bg-violet-50/30 transition-colors group">
+                          <td className="p-6">
+                            <div className="flex items-center gap-4">
+                              <div className="h-12 w-12 rounded-2xl bg-violet-100 flex items-center justify-center text-violet-600 font-black">
+                                {student.name.charAt(0)}
+                              </div>
+                              <div>
+                                <div className="font-black text-gray-900 group-hover:text-violet-600 transition-colors">{student.name}</div>
+                                <div className="text-xs font-bold text-gray-400">{student.email}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-6">
+                            <Badge variant="outline" className="rounded-lg border-violet-100 text-violet-600 font-bold">{student.plan}</Badge>
+                          </td>
+                          <td className="p-6">
+                            <div className={`flex items-center gap-2 text-xs font-black uppercase tracking-wider ${student.status === 'Active' ? 'text-green-600' : 'text-red-500'}`}>
+                              <div className={`h-2 w-2 rounded-full ${student.status === 'Active' ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                              {student.status}
+                            </div>
+                          </td>
+                          <td className="p-6 font-bold text-gray-500">{student.joinDate}</td>
+                          <td className="p-6 font-bold text-gray-500">{student.expiryDate}</td>
+                          <td className="p-6 text-right">
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="rounded-xl hover:bg-violet-100">
+                                  <MoreVertical className="h-5 w-5 text-gray-400" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end" className="rounded-2xl p-2 w-48 shadow-2xl border-violet-50">
+                                <DropdownMenuItem className="rounded-xl font-bold text-gray-600 focus:bg-violet-50 focus:text-violet-600 cursor-pointer">
+                                  <Mail className="mr-2 h-4 w-4" /> Email Student
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="rounded-xl font-bold text-gray-600 focus:bg-violet-50 focus:text-violet-600 cursor-pointer">
+                                  <ShieldCheck className="mr-2 h-4 w-4" /> Manage Plan
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="rounded-xl font-bold text-red-500 focus:bg-red-50 focus:text-red-600 cursor-pointer">
+                                  <Trash2 className="mr-2 h-4 w-4" /> Remove Student
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+            </div>
           )}
 
           {activeTab === "Courses" && (
