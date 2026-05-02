@@ -17,7 +17,7 @@ import {
   ChevronRight
 } from "lucide-react";
 
-const CATEGORIES = ["All", "Mathematics", "Physics", "Chemistry", "Biology", "English", "Coding"];
+const CATEGORIES = ["All", "Mathematics", "Physics", "Chemistry", "Biology", "English", "Coding", "Computer"];
 
 const COURSES = [
   {
@@ -66,6 +66,18 @@ const COURSES = [
     duration: "12h 00m",
     price: "Free",
     image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&q=80&w=800",
+    level: "Beginner"
+  },
+  {
+    id: 7,
+    title: "CCC: Computer Concepts Mastery",
+    instructor: "Prof. Alok Mishra",
+    category: "Computer",
+    rating: 4.8,
+    students: "20.1k",
+    duration: "80h 00m",
+    price: "₹599",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
     level: "Beginner"
   },
   {

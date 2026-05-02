@@ -13,7 +13,8 @@ import {
   Calculator, 
   Dna, 
   Zap,
-  Languages
+  Languages,
+  Monitor
 } from "lucide-react";
 
 const SYLLABUS_DATA = {
@@ -66,6 +67,18 @@ const SYLLABUS_DATA = {
       { unit: "Section III: Writing Skills", topics: ["Summary Writing", "Do Schools Kill Creativity?", "Note-Making", "Statement of Purpose", "Drafting a Virtual Message", "Group Discussion"] },
       { unit: "Section IV: Genre-Novel", topics: ["History of Novel", "To Sir, with Love", "Around the World in Eighty Days", "The Sign of Four"] }
     ]
+  },
+  computer: {
+    "CCC": [
+      { unit: "Introduction to Computer", topics: ["History of Computers", "Characteristics of Computer System", "Basic Applications of Computer", "Components of Computer System", "Concept of Hardware and Software"] },
+      { unit: "Introduction to Operating System", topics: ["Basics of Operating System", "The User Interface", "Operating System Simple Settings", "File and Directory Management"] },
+      { unit: "Word Processing", topics: ["Word Processing Basics", "Opening and Closing Documents", "Text Creation and Manipulation", "Formatting the Text", "Table Manipulation"] },
+      { unit: "Spreadsheet", topics: ["Elements of Electronic Spreadsheet", "Manipulation of Cells", "Formulas and Functions", "Charts and Graphs"] },
+      { unit: "Presentation", topics: ["Basics of Presentation Software", "Creating Presentation", "Preparation and Formatting of Slides", "Providing Aesthetics", "Slide Show"] },
+      { unit: "Internet & WWW", topics: ["Basics of Computer Networks", "Internet", "Services on Internet", "World Wide Web and Websites", "Web Browsing Software", "Search Engines"] },
+      { unit: "Digital Financial Tools", topics: ["Digital Financial Tools", "OTP", "QR Code", "UPI", "AEPS", "USSD", "Internet Banking", "E-Wallet"] },
+      { unit: "Cyber Security", topics: ["Cyber Security Basics", "Securing PC", "Securing Smart Phone", "Social Networking Safety"] }
+    ]
   }
 };
 
@@ -84,6 +97,7 @@ const Syllabus = () => {
 
   const getSubjectIcon = (subject: string) => {
     if (subject.includes("English")) return <Languages className="h-5 w-5" />;
+    if (subject === "CCC") return <Monitor className="h-5 w-5" />;
     switch (subject) {
       case "Physics": return <Zap className="h-5 w-5" />;
       case "Chemistry": return <Beaker className="h-5 w-5" />;
@@ -96,12 +110,14 @@ const Syllabus = () => {
   const getThemeColor = () => {
     if (examType === "jee") return "bg-violet-600";
     if (examType === "neet") return "bg-cyan-600";
+    if (examType === "computer") return "bg-emerald-600";
     return "bg-orange-600";
   };
 
   const getTabActiveColor = () => {
     if (examType === "jee") return "data-[state=active]:text-violet-600";
     if (examType === "neet") return "data-[state=active]:text-cyan-600";
+    if (examType === "computer") return "data-[state=active]:text-emerald-600";
     return "data-[state=active]:text-orange-600";
   };
 
@@ -120,15 +136,18 @@ const Syllabus = () => {
         </div>
 
         <Tabs value={examType} onValueChange={handleExamTypeChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-12 bg-violet-50/50 p-1.5 rounded-2xl max-w-2xl mx-auto">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-12 bg-violet-50/50 p-1.5 rounded-2xl max-w-4xl mx-auto">
             <TabsTrigger value="jee" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
-              JEE Main & Advanced
+              JEE
             </TabsTrigger>
             <TabsTrigger value="neet" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
-              NEET (Medical)
+              NEET
             </TabsTrigger>
             <TabsTrigger value="maharashtra" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
-              Maharashtra Board
+              State Board
+            </TabsTrigger>
+            <TabsTrigger value="computer" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
+              Computer
             </TabsTrigger>
           </TabsList>
 
@@ -156,12 +175,13 @@ const Syllabus = () => {
               <div className={`rounded-[2rem] p-8 text-white mb-4 flex items-center justify-between overflow-hidden relative ${getThemeColor()}`}>
                 <div className="relative z-10">
                   <h2 className="text-2xl font-black mb-2">
-                    {examType === 'maharashtra' ? 'Maharashtra Board' : examType.toUpperCase()} {selectedSubject} Mastery
+                    {examType === 'maharashtra' ? 'Maharashtra Board' : examType === 'computer' ? 'Computer Concepts' : examType.toUpperCase()} {selectedSubject} Mastery
                   </h2>
                   <p className="text-white/90 font-medium opacity-90">
                     {examType === "jee" && "Focus on conceptual depth and advanced problem-solving."}
                     {examType === "neet" && "Emphasis on fundamental concepts and speed-accuracy balance."}
                     {examType === "maharashtra" && "Comprehensive coverage of the state board curriculum and language skills."}
+                    {examType === "computer" && "Essential digital literacy skills for the modern world."}
                   </p>
                 </div>
                 <div className="opacity-10 absolute -right-4 -bottom-4 scale-150">
@@ -171,7 +191,7 @@ const Syllabus = () => {
               
               {currentSyllabus?.map((section, idx) => (
                 <Card key={idx} className="border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl">
-                  <CardHeader className={`${examType === "jee" ? "bg-violet-50/30 border-violet-50" : examType === "neet" ? "bg-cyan-50/30 border-cyan-50" : "bg-orange-50/30 border-orange-50"} border-b`}>
+                  <CardHeader className={`${examType === "jee" ? "bg-violet-50/30 border-violet-50" : examType === "neet" ? "bg-cyan-50/30 border-cyan-50" : examType === "computer" ? "bg-emerald-50/30 border-emerald-50" : "bg-orange-50/30 border-orange-50"} border-b`}>
                     <CardTitle className="text-xl font-black flex items-center gap-3 text-gray-900">
                       <div className={`h-8 w-8 rounded-lg flex items-center justify-center text-white text-sm ${getThemeColor()}`}>
                         {idx + 1}
@@ -186,6 +206,7 @@ const Syllabus = () => {
                           <CheckCircle2 className={`h-5 w-5 transition-colors ${
                             examType === "jee" ? "text-violet-400 group-hover:text-violet-600" : 
                             examType === "neet" ? "text-cyan-400 group-hover:text-cyan-600" : 
+                            examType === "computer" ? "text-emerald-400 group-hover:text-emerald-600" :
                             "text-orange-400 group-hover:text-orange-600"
                           }`} />
                           <span className="font-bold text-gray-600">{topic}</span>

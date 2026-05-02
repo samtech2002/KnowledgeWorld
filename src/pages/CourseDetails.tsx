@@ -39,6 +39,27 @@ const COURSES = [
       "Atomic Structure & Orbitals"
     ]
   },
+  {
+    id: 7,
+    title: "CCC: Computer Concepts Mastery",
+    instructor: "Prof. Alok Mishra",
+    category: "Computer",
+    rating: 4.8,
+    students: "20.1k",
+    duration: "80h 00m",
+    price: "₹599",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+    description: "The Certificate Course on Computer Concepts (CCC) is designed to impart basic level IT literacy to common man. This course is essential for anyone looking to understand computers, operating systems, and digital financial tools.",
+    curriculum: [
+      "Introduction to Computer & OS",
+      "Word Processing (MS Word/LibreOffice)",
+      "Spreadsheets (MS Excel/LibreOffice)",
+      "Presentations (MS PowerPoint)",
+      "Internet, WWW and Web Browsers",
+      "Digital Financial Tools & Applications",
+      "Cyber Security Basics"
+    ]
+  }
 ];
 
 const CourseDetails = () => {
@@ -134,10 +155,10 @@ const CourseDetails = () => {
                   <div className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Course Price</div>
                   <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-black text-violet-600">{course.price}</span>
-                    <span className="text-gray-400 line-through font-bold">₹4,999</span>
+                    <span className="text-gray-400 line-through font-bold">₹1,499</span>
                   </div>
                   <div className="mt-2 text-green-600 font-bold text-sm flex items-center gap-1">
-                    <Zap className="h-4 w-4 fill-current" /> 50% OFF - Limited Time Offer
+                    <Zap className="h-4 w-4 fill-current" /> 60% OFF - Limited Time Offer
                   </div>
                 </div>
 
@@ -148,7 +169,7 @@ const CourseDetails = () => {
                   </div>
                   <div className="flex items-center gap-3 text-gray-600 font-medium">
                     <FileText className="h-5 w-5 text-violet-500" />
-                    <span>12 Downloadable resources</span>
+                    <span>20 Downloadable resources</span>
                   </div>
                   <div className="flex items-center gap-3 text-gray-600 font-medium">
                     <ShieldCheck className="h-5 w-5 text-violet-500" />
