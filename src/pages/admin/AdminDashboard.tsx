@@ -27,6 +27,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { 
   Dialog, 
   DialogContent, 
@@ -55,7 +56,7 @@ const INITIAL_COURSES = [
   { id: 1, title: "Quantum Mechanics Mastery", instructor: "Dr. Sarah Chen", category: "Physics", price: "2499", students: 12500, status: "Active" },
   { id: 2, title: "Calculus: From Zero to Hero", instructor: "Prof. Rajesh Kumar", category: "Mathematics", price: "1999", students: 8200, status: "Active" },
   { id: 7, title: "CCC: Computer Concepts Mastery", instructor: "Prof. Alok Mishra", category: "Computer", price: "1700", students: 20100, status: "Active" },
-  { id: 3, title: "Organic Chemistry Simplified", instructor: "Dr. Amit Shah", category: "Chemistry", price: "1499", students: 5100, status: "Draft" },
+  { id: 3, title: "Organic Chemistry Simplified", instructor: "Dr. Amit Shah", category: "Chemistry", price: "0", students: 5100, status: "Draft" },
 ];
 
 const INITIAL_STUDENTS = [
@@ -74,6 +75,7 @@ const AdminDashboard = () => {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState<any>(null);
+  const [isFree, setIsFree] = useState(false);
   
   const [subscriptions, setSubscriptions] = useState({
     monthly: "499",
@@ -99,12 +101,13 @@ const AdminDashboard = () => {
       title: formData.get('title') as string,
       instructor: formData.get('instructor') as string,
       category: formData.get('category') as string,
-      price: formData.get('price') as string,
+      price: isFree ? "0" : (formData.get('price') as string),
       students: 0,
       status: "Active"
     };
     setCourses([newCourse, ...courses]);
     setIsAddDialogOpen(false);
+    setIsFree(false);
     showSuccess("New course added successfully!");
   };
 
@@ -142,13 +145,14 @@ const AdminDashboard = () => {
           title: formData.get('title') as string,
           instructor: formData.get('instructor') as string,
           category: formData.get('category') as string,
-          price: formData.get('price') as string,
+          price: isFree ? "0" : (formData.get('price') as string),
         };
       }
       return c;
     });
     setCourses(updatedCourses);
     setEditingCourse(null);
+    setIsFree(false);
     showSuccess("Course updated successfully!");
   };
 
@@ -468,7 +472,7 @@ const AdminDashboard = () => {
                   <h1 className="text-4xl font-black text-gray-900 mb-2">Course Management</h1>
                   <p className="text-gray-500 font-medium">Manage, edit, and monitor all educational content.</p>
                 </div>
-                <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+                <Dialog open={isAddDialogOpen} onOpenChange={(open) => { setIsAddDialogOpen(open); if(!open) setIsFree(false); }}>
                   <DialogTrigger asChild>
                     <Button className="bg-gradient-to-r from-violet-600 to-cyan-600 hover:opacity-90 text-white font-black px-8 h-14 rounded-2xl shadow-xl shadow-violet-200 transition-all hover:scale-105">
                       <Plus className="mr-2 h-5 w-5" /> Add New Course
@@ -496,8 +500,21 @@ const AdminDashboard = () => {
                           <Input name="category" placeholder="e.g. Science" className="h-12 rounded-xl border-violet-100" required />
                         </div>
                         <div className="space-y-2">
-                          <Label className="font-bold ml-1">Price (₹)</Label>
-                          <Input name="price" type="number" placeholder="1700" className="h-12 rounded-xl border-violet-100" required />
+                          <div className="flex items-center justify-between mb-1">
+                            <Label className="font-bold ml-1">Price (₹)</Label>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-bold text-gray-500">Mark as Free</span>
+                              <Switch checked={isFree} onCheckedChange={setIsFree} />
+                            </div>
+                          </div>
+                          <Input 
+                            name="price" 
+                            type="number" 
+                            placeholder="1700" 
+                            className="h-12 rounded-xl border-violet-100" 
+                            disabled={isFree}
+                            required={!isFree} 
+                          />
                         </div>
                       </div>
                       <DialogFooter className="pt-6">
@@ -556,7 +573,13 @@ const AdminDashboard = () => {
                           <td className="p-6">
                             <Badge variant="outline" className="rounded-lg border-violet-100 text-violet-600 font-bold">{course.category}</Badge>
                           </td>
-                          <td className="p-6 font-black text-gray-900">₹{course.price}</td>
+                          <td className="p-6 font-black text-gray-900">
+                            {course.price === "0" ? (
+                              <span className="text-green-600 font-black">FREE</span>
+                            ) : (
+                              `₹${course.price}`
+                            )}
+                          </td>
                           <td className="p-6 font-bold text-gray-500">{course.students.toLocaleString()}</td>
                           <td className="p-6">
                             <div className={`flex items-center gap-2 text-xs font-black uppercase tracking-wider ${course.status === 'Active' ? 'text-green-600' : 'text-orange-500'}`}>
@@ -573,7 +596,7 @@ const AdminDashboard = () => {
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end" className="rounded-2xl p-2 w-48 shadow-2xl border-violet-50">
                                 <DropdownMenuItem 
-                                  onClick={() => setEditingCourse(course)}
+                                  onClick={() => { setEditingCourse(course); setIsFree(course.price === "0"); }}
                                   className="rounded-xl font-bold text-gray-600 focus:bg-violet-50 focus:text-violet-600 cursor-pointer"
                                 >
                                   <Edit3 className="mr-2 h-4 w-4" /> Edit Course
@@ -598,7 +621,7 @@ const AdminDashboard = () => {
               </Card>
 
               {/* Edit Dialog */}
-              <Dialog open={!!editingCourse} onOpenChange={(open) => !open && setEditingCourse(null)}>
+              <Dialog open={!!editingCourse} onOpenChange={(open) => { if(!open) { setEditingCourse(null); setIsFree(false); } }}>
                 <DialogContent className="sm:max-w-[600px] rounded-[2.5rem] p-10">
                   <DialogHeader>
                     <DialogTitle className="text-3xl font-black">Edit Course</DialogTitle>
@@ -622,8 +645,21 @@ const AdminDashboard = () => {
                           <Input name="category" defaultValue={editingCourse.category} className="h-12 rounded-xl border-violet-100" required />
                         </div>
                         <div className="space-y-2">
-                          <Label className="font-bold ml-1">Price (₹)</Label>
-                          <Input name="price" type="number" defaultValue={editingCourse.price} className="h-12 rounded-xl border-violet-100" required />
+                          <div className="flex items-center justify-between mb-1">
+                            <Label className="font-bold ml-1">Price (₹)</Label>
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-bold text-gray-500">Mark as Free</span>
+                              <Switch checked={isFree} onCheckedChange={setIsFree} />
+                            </div>
+                          </div>
+                          <Input 
+                            name="price" 
+                            type="number" 
+                            defaultValue={isFree ? "" : editingCourse.price} 
+                            className="h-12 rounded-xl border-violet-100" 
+                            disabled={isFree}
+                            required={!isFree} 
+                          />
                         </div>
                       </div>
                       <DialogFooter className="pt-6">
