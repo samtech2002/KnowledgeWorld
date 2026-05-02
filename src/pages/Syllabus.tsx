@@ -16,7 +16,8 @@ import {
   Languages,
   Monitor,
   Video,
-  Play
+  Play,
+  X
 } from "lucide-react";
 
 const SYLLABUS_DATA = {
@@ -110,11 +111,13 @@ const VIDEO_LECTURES = {
 const Syllabus = () => {
   const [examType, setExamType] = useState<keyof typeof SYLLABUS_DATA>("jee");
   const [selectedSubject, setSelectedSubject] = useState<string>("Physics");
+  const [activeVideo, setActiveVideo] = useState<{id: string, title: string} | null>(null);
 
   const handleExamTypeChange = (value: string) => {
     const type = value as keyof typeof SYLLABUS_DATA;
     setExamType(type);
     setSelectedSubject(Object.keys(SYLLABUS_DATA[type])[0]);
+    setActiveVideo(null);
   };
 
   const currentSyllabus = SYLLABUS_DATA[examType][selectedSubject as keyof typeof SYLLABUS_DATA['jee']];
@@ -160,6 +163,32 @@ const Syllabus = () => {
           </p>
         </div>
 
+        {activeVideo && (
+          <div className="mb-12 animate-in fade-in slide-in-from-top-4 duration-500">
+            <Card className="border-none shadow-2xl shadow-violet-200/50 rounded-[2.5rem] overflow-hidden bg-black relative">
+              <div className="aspect-video w-full">
+                <iframe 
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${activeVideo.id}?autoplay=1`}
+                  title={activeVideo.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="p-6 bg-white flex items-center justify-between">
+                <div>
+                  <div className="text-xs font-black text-violet-600 uppercase tracking-widest mb-1">Now Playing</div>
+                  <h3 className="text-xl font-black text-gray-900">{activeVideo.title}</h3>
+                </div>
+                <Button variant="ghost" size="icon" onClick={() => setActiveVideo(null)} className="rounded-full hover:bg-red-50 hover:text-red-500">
+                  <X className="h-6 w-6" />
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
+
         <Tabs value={examType} onValueChange={handleExamTypeChange} className="w-full">
           <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-12 bg-violet-50/50 p-1.5 rounded-2xl max-w-4xl mx-auto">
             <TabsTrigger value="jee" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
@@ -180,7 +209,7 @@ const Syllabus = () => {
             {Object.keys(SYLLABUS_DATA[examType]).map((subject) => (
               <Button
                 key={subject}
-                onClick={() => setSelectedSubject(subject)}
+                onClick={() => { setSelectedSubject(subject); setActiveVideo(null); }}
                 variant={selectedSubject === subject ? "default" : "outline"}
                 className={`rounded-2xl font-bold px-6 h-12 transition-all ${
                   selectedSubject === subject 
@@ -249,14 +278,27 @@ const Syllabus = () => {
                 </CardHeader>
                 <CardContent className="p-6 space-y-4">
                   {currentVideos.length > 0 ? currentVideos.map((video, i) => (
-                    <div key={i} className="group p-4 bg-gray-50 rounded-2xl border border-transparent hover:border-violet-200 hover:bg-white transition-all cursor-pointer">
+                    <div 
+                      key={i} 
+                      onClick={() => {
+                        setActiveVideo({id: video.id, title: video.title});
+                        window.scrollTo({ top: 200, behavior: 'smooth' });
+                      }}
+                      className={`group p-4 rounded-2xl border transition-all cursor-pointer ${
+                        activeVideo?.id === video.id 
+                        ? 'bg-violet-600 border-violet-600 text-white' 
+                        : 'bg-gray-50 border-transparent hover:border-violet-200 hover:bg-white'
+                      }`}
+                    >
                       <div className="flex items-center gap-4">
-                        <div className="h-12 w-12 rounded-xl bg-violet-600 flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform">
+                        <div className={`h-12 w-12 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform ${
+                          activeVideo?.id === video.id ? 'bg-white/20 text-white' : 'bg-violet-600 text-white'
+                        }`}>
                           <Play className="h-5 w-5 fill-current" />
                         </div>
                         <div className="flex-1">
-                          <div className="font-black text-gray-900 text-sm line-clamp-1">{video.title}</div>
-                          <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">{video.duration} • HD</div>
+                          <div className={`font-black text-sm line-clamp-1 ${activeVideo?.id === video.id ? 'text-white' : 'text-gray-900'}`}>{video.title}</div>
+                          <div className={`text-xs font-bold uppercase tracking-widest ${activeVideo?.id === video.id ? 'text-violet-200' : 'text-gray-400'}`}>{video.duration} • HD</div>
                         </div>
                       </div>
                     </div>
