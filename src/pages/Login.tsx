@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, Mail, Lock, ArrowLeft, Sparkles } from "lucide-react";
+import { GraduationCap, Mail, Lock, ArrowLeft, Sparkles, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { showSuccess } from "@/utils/toast";
 
@@ -40,17 +40,18 @@ const Login = () => {
             </div>
           </div>
           <CardTitle className="text-3xl font-black tracking-tight text-gray-900">Welcome Back</CardTitle>
-          <CardDescription className="text-gray-500 font-medium">Access your personalized learning portal</CardDescription>
+          <CardDescription className="text-gray-500 font-medium">Access your personalized portal</CardDescription>
         </CardHeader>
         <CardContent className="pb-10">
           <Tabs defaultValue="student" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8 bg-violet-50/50 p-1.5 rounded-2xl">
-              <TabsTrigger value="student" className="rounded-xl font-bold data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Student</TabsTrigger>
-              <TabsTrigger value="teacher" className="rounded-xl font-bold data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Teacher</TabsTrigger>
-              <TabsTrigger value="admin" className="rounded-xl font-bold data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Admin</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 mb-8 bg-violet-50/50 p-1.5 rounded-2xl">
+              <TabsTrigger value="student" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Student</TabsTrigger>
+              <TabsTrigger value="teacher" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Teacher</TabsTrigger>
+              <TabsTrigger value="referral" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Partner</TabsTrigger>
+              <TabsTrigger value="admin" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Admin</TabsTrigger>
             </TabsList>
             
-            {['student', 'teacher', 'admin'].map((role) => (
+            {['student', 'teacher', 'referral', 'admin'].map((role) => (
               <TabsContent key={role} value={role} className="animate-in fade-in zoom-in-95 duration-300">
                 <form onSubmit={(e) => { e.preventDefault(); handleLogin(role); }} className="space-y-5">
                   <div className="space-y-2">
@@ -82,7 +83,7 @@ const Login = () => {
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-violet-600 to-cyan-600 hover:opacity-90 h-14 rounded-2xl text-lg font-black shadow-lg shadow-violet-100 transition-all active:scale-[0.98]" disabled={isLoading}>
-                    {isLoading ? "Authenticating..." : `Sign in as ${role.charAt(0).toUpperCase() + role.slice(1)}`}
+                    {isLoading ? "Authenticating..." : `Sign in as ${role === 'referral' ? 'Partner' : role.charAt(0).toUpperCase() + role.slice(1)}`}
                   </Button>
                 </form>
               </TabsContent>

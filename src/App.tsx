@@ -15,6 +15,9 @@ import CreateCourse from "./pages/teacher/CreateCourse";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import Exam from "./pages/student/Exam";
 import DoubtHub from "./pages/student/DoubtHub";
+import ReferralDashboard from "./pages/referral/ReferralDashboard";
+import ReferralWallet from "./pages/referral/ReferralWallet";
+import ReferralProfile from "./pages/referral/ReferralProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +43,11 @@ const App = () => (
           <Route path="/student" element={<StudentDashboard />} />
           <Route path="/student/exam" element={<Exam />} />
           <Route path="/student/doubts" element={<DoubtHub />} />
+          
+          {/* Referral Partner Routes */}
+          <Route path="/referral" element={<ReferralDashboard />} />
+          <Route path="/referral/wallet" element={<ReferralWallet />} />
+          <Route path="/referral/profile" element={<ReferralProfile />} />
           
           <Route path="*" element={<NotFound />} />
         </Routes>
