@@ -9,7 +9,8 @@ import {
   Clock, 
   LogOut,
   X,
-  CheckCircle2
+  CheckCircle2,
+  ExternalLink
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,11 +30,21 @@ const TeacherDashboard = () => {
 
   const handleStartClass = (id: number, subject: string) => {
     if (activeClasses.includes(id)) {
-      showSuccess(`Class "${subject}" is already live!`);
+      // If already active, just open the meet again or show status
+      window.open('https://meet.google.com/new', '_blank');
+      showSuccess(`Re-opening Google Meet for ${subject}`);
       return;
     }
-    setActiveClasses([...activeClasses, id]);
-    showSuccess(`Live session for ${subject} has started!`);
+
+    // Simulate starting a Google Meet session
+    const meetWindow = window.open('https://meet.google.com/new', '_blank');
+    
+    if (meetWindow) {
+      setActiveClasses([...activeClasses, id]);
+      showSuccess(`Live session for ${subject} started on Google Meet!`);
+    } else {
+      showSuccess("Please allow popups to start the Google Meet session.");
+    }
   };
 
   const schedule = [
@@ -185,8 +196,10 @@ const TeacherDashboard = () => {
                       className={`w-full rounded-xl font-bold shadow-lg transition-all ${activeClasses.includes(session.id) ? 'bg-green-500 hover:bg-green-600' : 'bg-violet-600 hover:bg-violet-700 shadow-violet-100'}`}
                     >
                       {activeClasses.includes(session.id) ? (
-                        <span className="flex items-center gap-2"><CheckCircle2 size={16} /> Session Active</span>
-                      ) : 'Start Class'}
+                        <span className="flex items-center gap-2"><ExternalLink size={16} /> Join Google Meet</span>
+                      ) : (
+                        <span className="flex items-center gap-2"><Video size={16} /> Start Class</span>
+                      )}
                     </Button>
                   </div>
                 ))}
