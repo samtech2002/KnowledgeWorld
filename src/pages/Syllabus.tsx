@@ -12,7 +12,8 @@ import {
   Beaker, 
   Calculator, 
   Dna, 
-  Zap 
+  Zap,
+  Languages
 } from "lucide-react";
 
 const SYLLABUS_DATA = {
@@ -51,16 +52,38 @@ const SYLLABUS_DATA = {
       { unit: "Zoology", topics: ["Animal Kingdom", "Human Physiology", "Structural Organization", "Biomolecules"] },
       { unit: "Genetics & Ecology", topics: ["Inheritance", "Evolution", "Ecosystem", "Biodiversity"] }
     ]
+  },
+  maharashtra: {
+    "English 11th": [
+      { unit: "Section I: Prose", topics: ["Being Neighborly", "On To The Summit", "The Call of the Soil", "Pillars of Democracy", "Mrs. Adis", "Tiger Hills"] },
+      { unit: "Section II: Poetry", topics: ["Cherry Tree", "The Sower", "There is Another Sky", "Upon Westminster Bridge", "Nose versus Eyes", "The Planners"] },
+      { unit: "Section III: Writing Skills", topics: ["Expansion of Ideas", "Blog Writing", "E-mails", "Interview", "Film Review", "The Art of Compering"] },
+      { unit: "Section IV: Genre-Drama", topics: ["History of English Drama", "The Rising of the Moon", "A Midsummer Night's Dream", "An Enemy of the People"] }
+    ],
+    "English 12th": [
+      { unit: "Section I: Prose", topics: ["An Astrologer's Day", "On Saying 'Please'", "The Cop and the Anthem", "Big Data-Big Insights", "The New Dress", "Into the Wild", "Why we Travel", "Voyaging Towards Excellence"] },
+      { unit: "Section II: Poetry", topics: ["Song of the Open Road", "Indian Weavers", "The Inchcape Rock", "Have you Earned your Tomorrow", "Father Returning Home", "Money", "She Walks in Beauty", "Small Towns and Rivers"] },
+      { unit: "Section III: Writing Skills", topics: ["Summary Writing", "Do Schools Kill Creativity?", "Note-Making", "Statement of Purpose", "Drafting a Virtual Message", "Group Discussion"] },
+      { unit: "Section IV: Genre-Novel", topics: ["History of Novel", "To Sir, with Love", "Around the World in Eighty Days", "The Sign of Four"] }
+    ]
   }
 };
 
 const Syllabus = () => {
-  const [examType, setExamType] = useState<"jee" | "neet">("jee");
-  const [selectedSubject, setSelectedSubject] = useState("Physics");
+  const [examType, setExamType] = useState<keyof typeof SYLLABUS_DATA>("jee");
+  const [selectedSubject, setSelectedSubject] = useState<string>("Physics");
+
+  // Reset subject when exam type changes
+  const handleExamTypeChange = (value: string) => {
+    const type = value as keyof typeof SYLLABUS_DATA;
+    setExamType(type);
+    setSelectedSubject(Object.keys(SYLLABUS_DATA[type])[0]);
+  };
 
   const currentSyllabus = SYLLABUS_DATA[examType][selectedSubject as keyof typeof SYLLABUS_DATA['jee']];
 
   const getSubjectIcon = (subject: string) => {
+    if (subject.includes("English")) return <Languages className="h-5 w-5" />;
     switch (subject) {
       case "Physics": return <Zap className="h-5 w-5" />;
       case "Chemistry": return <Beaker className="h-5 w-5" />;
@@ -71,8 +94,15 @@ const Syllabus = () => {
   };
 
   const getThemeColor = () => {
-    if (examType === "jee") return "violet";
-    return "cyan";
+    if (examType === "jee") return "bg-violet-600";
+    if (examType === "neet") return "bg-cyan-600";
+    return "bg-orange-600";
+  };
+
+  const getTabActiveColor = () => {
+    if (examType === "jee") return "data-[state=active]:text-violet-600";
+    if (examType === "neet") return "data-[state=active]:text-cyan-600";
+    return "data-[state=active]:text-orange-600";
   };
 
   return (
@@ -85,20 +115,20 @@ const Syllabus = () => {
             Exam <span className="text-gradient">Syllabus Guide</span>
           </h1>
           <p className="text-gray-500 font-medium text-lg max-w-2xl mx-auto">
-            Master every topic with our structured curriculum for India's toughest competitive exams.
+            Master every topic with our structured curriculum for India's toughest competitive exams and state boards.
           </p>
         </div>
 
-        <Tabs defaultValue="jee" onValueChange={(v) => {
-          setExamType(v as "jee" | "neet");
-          setSelectedSubject("Physics");
-        }} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-12 bg-violet-50/50 p-1.5 rounded-2xl max-w-md mx-auto">
-            <TabsTrigger value="jee" className="rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">
+        <Tabs value={examType} onValueChange={handleExamTypeChange} className="w-full">
+          <TabsList className="grid w-full grid-cols-3 mb-12 bg-violet-50/50 p-1.5 rounded-2xl max-w-2xl mx-auto">
+            <TabsTrigger value="jee" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
               JEE Main & Advanced
             </TabsTrigger>
-            <TabsTrigger value="neet" className="rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:text-cyan-600 data-[state=active]:shadow-sm">
+            <TabsTrigger value="neet" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
               NEET (Medical)
+            </TabsTrigger>
+            <TabsTrigger value="maharashtra" className={`rounded-xl font-bold py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm ${getTabActiveColor()}`}>
+              Maharashtra Board
             </TabsTrigger>
           </TabsList>
 
@@ -111,7 +141,7 @@ const Syllabus = () => {
                 variant={selectedSubject === subject ? "default" : "outline"}
                 className={`rounded-2xl font-bold px-6 h-12 transition-all ${
                   selectedSubject === subject 
-                    ? examType === "jee" ? "bg-violet-600 hover:bg-violet-700 shadow-lg shadow-violet-200" : "bg-cyan-600 hover:bg-cyan-700 shadow-lg shadow-cyan-200"
+                    ? `${getThemeColor()} hover:opacity-90 shadow-lg` 
                     : "bg-white border-violet-100 text-gray-500 hover:text-violet-600"
                 }`}
               >
@@ -123,15 +153,15 @@ const Syllabus = () => {
 
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="grid gap-6">
-              <div className={`rounded-[2rem] p-8 text-white mb-4 flex items-center justify-between overflow-hidden relative ${
-                examType === "jee" ? "bg-violet-600" : "bg-cyan-600"
-              }`}>
+              <div className={`rounded-[2rem] p-8 text-white mb-4 flex items-center justify-between overflow-hidden relative ${getThemeColor()}`}>
                 <div className="relative z-10">
-                  <h2 className="text-2xl font-black mb-2">{examType.toUpperCase()} {selectedSubject} Mastery</h2>
+                  <h2 className="text-2xl font-black mb-2">
+                    {examType === 'maharashtra' ? 'Maharashtra Board' : examType.toUpperCase()} {selectedSubject} Mastery
+                  </h2>
                   <p className="text-white/90 font-medium opacity-90">
-                    {examType === "jee" 
-                      ? "Focus on conceptual depth and advanced problem-solving." 
-                      : "Emphasis on fundamental concepts and speed-accuracy balance."}
+                    {examType === "jee" && "Focus on conceptual depth and advanced problem-solving."}
+                    {examType === "neet" && "Emphasis on fundamental concepts and speed-accuracy balance."}
+                    {examType === "maharashtra" && "Comprehensive coverage of the state board curriculum and language skills."}
                   </p>
                 </div>
                 <div className="opacity-10 absolute -right-4 -bottom-4 scale-150">
@@ -141,11 +171,9 @@ const Syllabus = () => {
               
               {currentSyllabus?.map((section, idx) => (
                 <Card key={idx} className="border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl">
-                  <CardHeader className={`${examType === "jee" ? "bg-violet-50/30 border-violet-50" : "bg-cyan-50/30 border-cyan-50"} border-b`}>
+                  <CardHeader className={`${examType === "jee" ? "bg-violet-50/30 border-violet-50" : examType === "neet" ? "bg-cyan-50/30 border-cyan-50" : "bg-orange-50/30 border-orange-50"} border-b`}>
                     <CardTitle className="text-xl font-black flex items-center gap-3 text-gray-900">
-                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center text-white text-sm ${
-                        examType === "jee" ? "bg-violet-600" : "bg-cyan-600"
-                      }`}>
+                      <div className={`h-8 w-8 rounded-lg flex items-center justify-center text-white text-sm ${getThemeColor()}`}>
                         {idx + 1}
                       </div>
                       {section.unit}
@@ -156,7 +184,9 @@ const Syllabus = () => {
                       {section.topics.map((topic, tIdx) => (
                         <div key={tIdx} className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
                           <CheckCircle2 className={`h-5 w-5 transition-colors ${
-                            examType === "jee" ? "text-violet-400 group-hover:text-violet-600" : "text-cyan-400 group-hover:text-cyan-600"
+                            examType === "jee" ? "text-violet-400 group-hover:text-violet-600" : 
+                            examType === "neet" ? "text-cyan-400 group-hover:text-cyan-600" : 
+                            "text-orange-400 group-hover:text-orange-600"
                           }`} />
                           <span className="font-bold text-gray-600">{topic}</span>
                         </div>
@@ -177,9 +207,7 @@ const Syllabus = () => {
             <h3 className="text-xl font-black text-gray-900 mb-2">Need a personalized study plan?</h3>
             <p className="text-gray-500 font-medium">Our AI-powered system can create a custom schedule based on your strengths and weaknesses in these topics.</p>
           </div>
-          <Button className={`${
-            examType === "jee" ? "bg-violet-600 hover:bg-violet-700" : "bg-cyan-600 hover:bg-cyan-700"
-          } text-white font-black px-8 h-14 rounded-2xl shrink-0 shadow-lg transition-all hover:scale-105`}>
+          <Button className={`${getThemeColor()} hover:opacity-90 text-white font-black px-8 h-14 rounded-2xl shrink-0 shadow-lg transition-all hover:scale-105`}>
             Generate My Plan
           </Button>
         </div>
