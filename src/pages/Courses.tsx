@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -120,6 +121,11 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-[#FAFAFF]">
+      <SEO 
+        title="Explore Courses - Premium Education" 
+        description="Browse our extensive library of premium courses for JEE, NEET, CCC, and more. Learn from expert instructors and master your subjects."
+        keywords="online courses, JEE coaching, NEET preparation, CCC certification, computer courses, physics lessons"
+      />
       <Navbar />
       
       <main className="pt-32 pb-20 px-4 max-w-7xl mx-auto">

@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { 
   BookOpen, 
@@ -14,6 +15,11 @@ import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <div className="min-h-screen bg-[#FAFAFF] selection:bg-violet-200 selection:text-violet-900">
+      <SEO 
+        title="Home - India's Premier Learning Platform" 
+        description="KnowledgeWorld.in combines cutting-edge technology with India's top educators to deliver a learning experience that's as effective as it is engaging."
+        keywords="JEE, NEET, CCC, online education, India learning platform, physics, math, biology"
+      />
       <Navbar />
       
       {/* Hero Section */}
