@@ -5,6 +5,7 @@ import AdminSidebar from '@/components/admin/AdminSidebar';
 import AdminHeader from '@/components/admin/AdminHeader';
 import OverviewTab from '@/components/admin/OverviewTab';
 import StudentsTab from '@/components/admin/StudentsTab';
+import PartnersTab from '@/components/admin/PartnersTab';
 import CoursesTab from '@/components/admin/CoursesTab';
 import SubscriptionsTab from '@/components/admin/SubscriptionsTab';
 import { showSuccess } from "@/utils/toast";
@@ -86,10 +87,18 @@ const INITIAL_STUDENTS = [
   },
 ];
 
+const INITIAL_PARTNERS = [
+  { id: 1, name: "Prashant Sharma", email: "prashant@example.com", totalReferrals: 48, totalEarnings: 12450, status: "Active", joinDate: "2023-10-12" },
+  { id: 2, name: "Vikram Singh", email: "vikram@example.com", totalReferrals: 12, totalEarnings: 3200, status: "Pending KYC", joinDate: "2024-01-05" },
+  { id: 3, name: "Sneha Reddy", email: "sneha@example.com", totalReferrals: 85, totalEarnings: 24100, status: "Active", joinDate: "2023-08-20" },
+  { id: 4, name: "Amit Patel", email: "amit@example.com", totalReferrals: 5, totalEarnings: 1200, status: "Suspended", joinDate: "2023-12-15" },
+];
+
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("Overview");
   const [courses, setCourses] = useState(INITIAL_COURSES);
   const [students, setStudents] = useState(INITIAL_STUDENTS);
+  const [partners, setPartners] = useState(INITIAL_PARTNERS);
   const [searchQuery, setSearchQuery] = useState("");
   
   const [subscriptions, setSubscriptions] = useState({
@@ -182,6 +191,12 @@ const AdminDashboard = () => {
               students={students} 
               searchQuery={searchQuery} 
               onRegisterStudent={handleRegisterStudent} 
+            />
+          )}
+          {activeTab === "Partners" && (
+            <PartnersTab 
+              partners={partners} 
+              searchQuery={searchQuery} 
             />
           )}
           {activeTab === "Courses" && (

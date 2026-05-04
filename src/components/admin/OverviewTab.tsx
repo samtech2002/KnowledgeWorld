@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { DollarSign, Users, TrendingUp, UserCheck, CheckCircle2 } from "lucide-react";
+import { DollarSign, Users, TrendingUp, UserCheck, CheckCircle2, Handshake } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -13,7 +13,7 @@ const OverviewTab = ({ students }: OverviewTabProps) => {
   const stats = [
     { label: "Total Revenue", value: "₹4,25,000", icon: <DollarSign />, color: "text-green-600", bg: "bg-green-50" },
     { label: "Active Students", value: "12,450", icon: <Users />, color: "text-blue-600", bg: "bg-blue-50" },
-    { label: "New Enrollments", value: "+142", icon: <TrendingUp />, color: "text-indigo-600", bg: "bg-indigo-50" },
+    { label: "Active Partners", value: "142", icon: <Handshake />, color: "text-violet-600", bg: "bg-violet-50" },
     { label: "Active Teachers", value: "86", icon: <UserCheck />, color: "text-orange-600", bg: "bg-orange-50" },
   ];
 
