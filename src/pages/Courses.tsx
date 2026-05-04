@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
+import PurchaseModal from "@/components/course/PurchaseModal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +16,8 @@ import {
   Users, 
   PlayCircle,
   BookOpen,
-  ChevronRight
+  ChevronRight,
+  Zap
 } from "lucide-react";
 
 const CATEGORIES = ["All", "Mathematics", "Physics", "Chemistry", "Biology", "English", "Coding", "Computer"];
@@ -111,6 +113,7 @@ const Courses = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [purchaseCourse, setPurchaseCourse] = useState<any>(null);
 
   const filteredCourses = COURSES.filter(course => {
     const matchesCategory = selectedCategory === "All" || course.category === selectedCategory;
@@ -215,16 +218,26 @@ const Courses = () => {
                 </div>
               </CardContent>
               
-              <CardFooter className="p-6 pt-0 flex items-center justify-between border-t border-violet-50 mt-2">
-                <div className="text-2xl font-black text-violet-600">
-                  {course.price}
+              <CardFooter className="p-6 pt-0 flex items-center gap-3 border-t border-violet-50 mt-2">
+                <div className="flex-1">
+                  <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">Price</div>
+                  <div className="text-2xl font-black text-violet-600">{course.price}</div>
                 </div>
-                <Button 
-                  onClick={() => navigate(`/course/${course.id}`)}
-                  className="bg-violet-50 text-violet-600 hover:bg-violet-600 hover:text-white font-bold rounded-xl transition-all"
-                >
-                  Enroll Now <ChevronRight className="ml-1 h-4 w-4" />
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline"
+                    onClick={() => navigate(`/course/${course.id}`)}
+                    className="rounded-xl font-bold border-violet-100 text-violet-600 hover:bg-violet-50"
+                  >
+                    Details
+                  </Button>
+                  <Button 
+                    onClick={() => setPurchaseCourse(course)}
+                    className="bg-gradient-to-r from-violet-600 to-cyan-600 hover:opacity-90 text-white font-black rounded-xl shadow-lg shadow-violet-100"
+                  >
+                    Buy <Zap className="ml-1.5 h-4 w-4 fill-current" />
+                  </Button>
+                </div>
               </CardFooter>
             </Card>
           ))}
@@ -247,6 +260,14 @@ const Courses = () => {
           </div>
         )}
       </main>
+
+      {purchaseCourse && (
+        <PurchaseModal 
+          isOpen={!!purchaseCourse} 
+          onClose={() => setPurchaseCourse(null)} 
+          course={purchaseCourse} 
+        />
+      )}
 
       <Footer />
     </div>
