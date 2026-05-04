@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { showSuccess } from "@/utils/toast";
 import { CCC_QUESTION_BANK, Question } from "@/data/ccc-questions";
 
