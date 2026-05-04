@@ -17,11 +17,73 @@ const INITIAL_COURSES = [
 ];
 
 const INITIAL_STUDENTS = [
-  { id: 1, name: "Aryan Sharma", email: "aryan@example.com", plan: "Yearly", status: "Active", joinDate: "2023-10-01", expiryDate: "2024-10-01", amount: "4499" },
-  { id: 2, name: "Priya Patel", email: "priya@example.com", plan: "Monthly", status: "Active", joinDate: "2024-01-15", expiryDate: "2024-02-15", amount: "499" },
-  { id: 3, name: "Rahul Verma", email: "rahul@example.com", plan: "Quarterly", status: "Expired", joinDate: "2023-06-10", expiryDate: "2023-09-10", amount: "1299" },
-  { id: 4, name: "Anjali Gupta", email: "anjali@example.com", plan: "Trial", status: "Active", joinDate: "2024-01-20", expiryDate: "2024-01-27", amount: "0" },
-  { id: 5, name: "Siddharth Singh", email: "sid@example.com", plan: "Half-Yearly", status: "Active", joinDate: "2023-11-05", expiryDate: "2024-05-05", amount: "2499" },
+  { 
+    id: 1, 
+    name: "Aryan Sharma", 
+    email: "aryan@example.com", 
+    plan: "Yearly", 
+    status: "Active", 
+    joinDate: "2023-10-01", 
+    expiryDate: "2024-10-01", 
+    amount: "4499",
+    enrolledCourses: ["Quantum Mechanics Mastery", "Calculus: From Zero to Hero"],
+    exams: [
+      { subject: "Physics", score: "3/3", date: "2024-01-10" },
+      { subject: "Mathematics", score: "2/2", date: "2024-01-12" }
+    ]
+  },
+  { 
+    id: 2, 
+    name: "Priya Patel", 
+    email: "priya@example.com", 
+    plan: "Monthly", 
+    status: "Active", 
+    joinDate: "2024-01-15", 
+    expiryDate: "2024-02-15", 
+    amount: "499",
+    enrolledCourses: ["CCC: Computer Concepts Mastery"],
+    exams: [
+      { subject: "CCC", score: "2/3", date: "2024-01-20" }
+    ]
+  },
+  { 
+    id: 3, 
+    name: "Rahul Verma", 
+    email: "rahul@example.com", 
+    plan: "Quarterly", 
+    status: "Expired", 
+    joinDate: "2023-06-10", 
+    expiryDate: "2023-09-10", 
+    amount: "1299",
+    enrolledCourses: ["Organic Chemistry Simplified"],
+    exams: []
+  },
+  { 
+    id: 4, 
+    name: "Anjali Gupta", 
+    email: "anjali@example.com", 
+    plan: "Trial", 
+    status: "Active", 
+    joinDate: "2024-01-20", 
+    expiryDate: "2024-01-27", 
+    amount: "0",
+    enrolledCourses: ["Calculus: From Zero to Hero"],
+    exams: []
+  },
+  { 
+    id: 5, 
+    name: "Siddharth Singh", 
+    email: "sid@example.com", 
+    plan: "Half-Yearly", 
+    status: "Active", 
+    joinDate: "2023-11-05", 
+    expiryDate: "2024-05-05", 
+    amount: "2499",
+    enrolledCourses: ["Quantum Mechanics Mastery"],
+    exams: [
+      { subject: "Physics", score: "1/3", date: "2023-12-15" }
+    ]
+  },
 ];
 
 const AdminDashboard = () => {
@@ -79,7 +141,9 @@ const AdminDashboard = () => {
       status: "Active",
       joinDate: new Date().toISOString().split('T')[0],
       expiryDate: "2025-01-01",
-      amount: amount
+      amount: amount,
+      enrolledCourses: [],
+      exams: []
     };
     setStudents([newStudent, ...students]);
     showSuccess(`${newStudent.name} has been registered and enrolled!`);

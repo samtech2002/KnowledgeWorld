@@ -10,7 +10,9 @@ import {
   Phone, 
   MapPin, 
   Save,
-  ShieldCheck
+  ShieldCheck,
+  Upload,
+  FileText
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,12 +25,20 @@ import { showSuccess } from "@/utils/toast";
 const ReferralProfile = () => {
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
+  const [files, setFiles] = useState<{ aadhar?: File; pan?: File }>({});
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'aadhar' | 'pan') => {
+    if (e.target.files?.[0]) {
+      setFiles(prev => ({ ...prev, [type]: e.target.files![0] }));
+      showSuccess(`${type.toUpperCase()} photo selected!`);
+    }
+  };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
     setTimeout(() => {
-      showSuccess("Profile updated successfully!");
+      showSuccess("Profile and documents updated successfully!");
       setIsSaving(false);
     }, 1500);
   };
@@ -114,19 +124,61 @@ const ReferralProfile = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-gray-900">KYC Verification</h3>
-                  <p className="text-sm font-medium text-gray-500">Verified on Oct 15, 2023</p>
+                  <p className="text-sm font-medium text-gray-500">Upload documents for verification</p>
                 </div>
               </div>
-              <Badge className="bg-green-500 text-white border-none font-black px-4 py-1">VERIFIED</Badge>
+              <Badge className="bg-orange-500 text-white border-none font-black px-4 py-1">PENDING UPDATE</Badge>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-4 bg-violet-50/50 rounded-2xl border border-violet-100">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">PAN Card</p>
-                <p className="font-bold text-gray-700">ABCDE****F</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <Label className="font-bold text-gray-700">Aadhar Card Photo</Label>
+                <div className="relative group">
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={(e) => handleFileChange(e, 'aadhar')}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  />
+                  <div className="h-32 rounded-2xl border-2 border-dashed border-violet-100 bg-violet-50/30 flex flex-col items-center justify-center text-center p-4 group-hover:border-violet-300 transition-colors">
+                    {files.aadhar ? (
+                      <div className="flex flex-col items-center gap-1">
+                        <FileText className="h-8 w-8 text-green-600" />
+                        <span className="text-xs font-bold text-gray-600 truncate max-w-[150px]">{files.aadhar.name}</span>
+                      </div>
+                    ) : (
+                      <>
+                        <Upload className="h-6 w-6 text-violet-400 mb-2" />
+                        <span className="text-xs font-bold text-gray-500">Click to upload Aadhar</span>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="p-4 bg-violet-50/50 rounded-2xl border border-violet-100">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Aadhar Number</p>
-                <p className="font-bold text-gray-700">**** **** 1234</p>
+
+              <div className="space-y-4">
+                <Label className="font-bold text-gray-700">PAN Card Photo</Label>
+                <div className="relative group">
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={(e) => handleFileChange(e, 'pan')}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  />
+                  <div className="h-32 rounded-2xl border-2 border-dashed border-violet-100 bg-violet-50/30 flex flex-col items-center justify-center text-center p-4 group-hover:border-violet-300 transition-colors">
+                    {files.pan ? (
+                      <div className="flex flex-col items-center gap-1">
+                        <FileText className="h-8 w-8 text-green-600" />
+                        <span className="text-xs font-bold text-gray-600 truncate max-w-[150px]">{files.pan.name}</span>
+                      </div>
+                    ) : (
+                      <>
+                        <Upload className="h-6 w-6 text-violet-400 mb-2" />
+                        <span className="text-xs font-bold text-gray-500">Click to upload PAN</span>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </Card>
