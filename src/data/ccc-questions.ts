@@ -54,26 +54,12 @@ export const CCC_QUESTION_BANK: Question[] = [
   { id: 32, question: "What is the full form of OTP?", options: ["One Time Password", "One Time Program", "Only Time Password", "Only Time Program"], correct: "One Time Password", module: "Finance" },
   { id: 33, question: "Which code is used for mobile banking without internet?", options: ["*99#", "*121#", "*123#", "*100#"], correct: "*99#", module: "Finance" },
   { id: 34, question: "What is the full form of AEPS?", options: ["Aadhaar Enabled Payment System", "Aadhaar Enabled Program System", "Aadhaar Easy Payment System", "Aadhaar Easy Program System"], correct: "Aadhaar Enabled Payment System", module: "Finance" },
-  { id: 35, question: "What is the maximum limit of UPI per day (standard)?", options: ["₹10,000", "₹50,000", "₹1,00,000", "₹5,00,000"], correct: "₹1,00,000", module: "Finance" },
+  { id: 35, question: "What is the maximum limit of UPI per day (standard)?", options: ["₹1,00,000", "₹50,000", "₹10,000", "₹5,00,000"], correct: "₹1,00,000", module: "Finance" },
 
   // Module 8: Cyber Security
   { id: 36, question: "What is the full form of QR Code?", options: ["Quick Response Code", "Quick Result Code", "Quality Response Code", "Quality Result Code"], correct: "Quick Response Code", module: "Security" },
   { id: 37, question: "Which of the following is a type of cyber attack?", options: ["Phishing", "Fishing", "Pushing", "Pulling"], correct: "Phishing", module: "Security" },
   { id: 38, question: "What is the full form of OTP?", options: ["One Time Password", "One Time Program", "Only Time Password", "Only Time Program"], correct: "One Time Password", module: "Security" },
   { id: 39, question: "Which of the following is used to protect a computer from viruses?", options: ["Firewall", "Antivirus", "Backup", "Password"], correct: "Antivirus", module: "Security" },
-  { id: 40, question: "What is the full form of KYC?", options: ["Know Your Customer", "Know Your Computer", "Keep Your Cash", "Keep Your Customer"], correct: "Know Your Customer", module: "Security" },
-
-  // ... (Simulating 1000+ questions by generating variations with correct matching options)
-  ...Array.from({ length: 960 }, (_, i) => {
-    const modules = ["Basics", "OS", "Writer", "Calc", "Impress", "Internet", "Finance", "Security"];
-    const mod = modules[i % modules.length];
-    const correctOption = "All of the above";
-    return {
-      id: i + 41,
-      question: `CCC Exam Question ${i + 41}: Which of the following is a key feature of ${mod} in modern computing?`,
-      options: ["High Speed", "Low Cost", "User Friendly", correctOption],
-      correct: correctOption,
-      module: mod
-    };
-  })
+  { id: 40, question: "What is the full form of KYC?", options: ["Know Your Customer", "Know Your Computer", "Keep Your Cash", "Keep Your Customer"], correct: "Know Your Customer", module: "Security" }
 ];

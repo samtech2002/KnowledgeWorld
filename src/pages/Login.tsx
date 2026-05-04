@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, Mail, Lock, ArrowLeft } from "lucide-react";
+import { GraduationCap, Mail, Lock, ArrowLeft, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { showSuccess } from "@/utils/toast";
 
@@ -44,14 +44,15 @@ const Login = () => {
         </CardHeader>
         <CardContent className="pb-10">
           <Tabs defaultValue="student" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-8 bg-violet-50/50 p-1.5 rounded-2xl">
-              <TabsTrigger value="student" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Student</TabsTrigger>
-              <TabsTrigger value="teacher" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Teacher</TabsTrigger>
-              <TabsTrigger value="referral" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Partner</TabsTrigger>
-              <TabsTrigger value="admin" className="rounded-xl font-bold text-[10px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Admin</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-5 mb-8 bg-violet-50/50 p-1.5 rounded-2xl">
+              <TabsTrigger value="student" className="rounded-xl font-bold text-[9px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Student</TabsTrigger>
+              <TabsTrigger value="teacher" className="rounded-xl font-bold text-[9px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Teacher</TabsTrigger>
+              <TabsTrigger value="moderator" className="rounded-xl font-bold text-[9px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Mod</TabsTrigger>
+              <TabsTrigger value="referral" className="rounded-xl font-bold text-[9px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Partner</TabsTrigger>
+              <TabsTrigger value="admin" className="rounded-xl font-bold text-[9px] data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">Admin</TabsTrigger>
             </TabsList>
             
-            {['student', 'teacher', 'referral', 'admin'].map((role) => (
+            {['student', 'teacher', 'moderator', 'referral', 'admin'].map((role) => (
               <TabsContent key={role} value={role} className="animate-in fade-in zoom-in-95 duration-300">
                 <form onSubmit={(e) => { e.preventDefault(); handleLogin(role); }} className="space-y-5">
                   <div className="space-y-2">
