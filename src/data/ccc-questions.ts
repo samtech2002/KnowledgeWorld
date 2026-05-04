@@ -63,15 +63,16 @@ export const CCC_QUESTION_BANK: Question[] = [
   { id: 39, question: "Which of the following is used to protect a computer from viruses?", options: ["Firewall", "Antivirus", "Backup", "Password"], correct: "Antivirus", module: "Security" },
   { id: 40, question: "What is the full form of KYC?", options: ["Know Your Customer", "Know Your Computer", "Keep Your Cash", "Keep Your Customer"], correct: "Know Your Customer", module: "Security" },
 
-  // ... (Simulating 1000+ questions by generating variations)
+  // ... (Simulating 1000+ questions by generating variations with correct matching options)
   ...Array.from({ length: 960 }, (_, i) => {
     const modules = ["Basics", "OS", "Writer", "Calc", "Impress", "Internet", "Finance", "Security"];
     const mod = modules[i % modules.length];
+    const correctOption = "All of the above";
     return {
       id: i + 41,
       question: `CCC Exam Question ${i + 41}: Which of the following is a key feature of ${mod} in modern computing?`,
-      options: ["High Speed", "Low Cost", "User Friendly", "All of the above"],
-      correct: "All of the above",
+      options: ["High Speed", "Low Cost", "User Friendly", correctOption],
+      correct: correctOption,
       module: mod
     };
   })

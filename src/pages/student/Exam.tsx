@@ -9,7 +9,9 @@ import {
   ChevronLeft,
   Trophy,
   Timer,
-  Shuffle
+  Shuffle,
+  XCircle,
+  Check
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,6 +19,7 @@ import { Progress } from "@/components/ui/progress";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { showSuccess } from "@/utils/toast";
 import { CCC_QUESTION_BANK, Question } from "@/data/ccc-questions";
 
@@ -41,13 +44,14 @@ const Exam = () => {
     }
 
     // Fisher-Yates Shuffle
-    for (let i = pool.length - 1; i > 0; i--) {
+    const shuffled = [...pool];
+    for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [pool[i], pool[j]] = [pool[j], pool[i]];
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
     // Pick 100 for CCC, or all if less
-    return pool.slice(0, course.includes("CCC") ? 100 : 10);
+    return shuffled.slice(0, course.includes("CCC") ? 100 : 10);
   };
 
   useEffect(() => {
@@ -115,45 +119,87 @@ const Exam = () => {
     const status = percentage >= 50 ? "PASSED" : "FAILED";
 
     return (
-      <div className="min-h-screen bg-[#FAFAFF] flex items-center justify-center p-4">
-        <Card className="w-full max-w-md border-none shadow-2xl rounded-[2.5rem] bg-white text-center p-10 animate-in zoom-in duration-500">
-          <div className="flex justify-center mb-6">
-            <div className={`p-6 rounded-full ${status === 'PASSED' ? 'bg-green-100' : 'bg-red-100'}`}>
-              <Trophy className={`h-16 w-16 ${status === 'PASSED' ? 'text-green-600' : 'text-red-600'}`} />
+      <div className="min-h-screen bg-[#FAFAFF] py-12 px-4">
+        <div className="max-w-4xl mx-auto space-y-8">
+          <Card className="border-none shadow-2xl rounded-[2.5rem] bg-white text-center p-10 animate-in zoom-in duration-500">
+            <div className="flex justify-center mb-6">
+              <div className={`p-6 rounded-full ${status === 'PASSED' ? 'bg-green-100' : 'bg-red-100'}`}>
+                <Trophy className={`h-16 w-16 ${status === 'PASSED' ? 'text-green-600' : 'text-red-600'}`} />
+              </div>
             </div>
-          </div>
-          <h1 className="text-3xl font-black text-gray-900 mb-2">Exam Result</h1>
-          <p className="text-gray-500 font-medium mb-8">
-            {status === 'PASSED' ? "Congratulations! You've cleared the exam." : "Keep practicing! You can try again soon."}
-          </p>
-          
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="bg-violet-50 rounded-3xl p-6">
-              <div className="text-3xl font-black text-violet-600">{score}/{total}</div>
-              <div className="text-[10px] font-bold text-violet-400 uppercase tracking-widest">Score</div>
+            <h1 className="text-3xl font-black text-gray-900 mb-2">Exam Result</h1>
+            <p className="text-gray-500 font-medium mb-8">
+              {status === 'PASSED' ? "Congratulations! You've cleared the exam." : "Keep practicing! You can try again soon."}
+            </p>
+            
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="bg-violet-50 rounded-3xl p-6">
+                <div className="text-3xl font-black text-violet-600">{score}/{total}</div>
+                <div className="text-[10px] font-bold text-violet-400 uppercase tracking-widest">Score</div>
+              </div>
+              <div className={`rounded-3xl p-6 ${status === 'PASSED' ? 'bg-green-50' : 'bg-red-50'}`}>
+                <div className={`text-3xl font-black ${status === 'PASSED' ? 'text-green-600' : 'text-red-600'}`}>{status}</div>
+                <div className={`text-[10px] font-bold uppercase tracking-widest ${status === 'PASSED' ? 'text-green-400' : 'text-red-400'}`}>Status</div>
+              </div>
             </div>
-            <div className={`rounded-3xl p-6 ${status === 'PASSED' ? 'bg-green-50' : 'bg-red-50'}`}>
-              <div className={`text-3xl font-black ${status === 'PASSED' ? 'text-green-600' : 'text-red-600'}`}>{status}</div>
-              <div className={`text-[10px] font-bold uppercase tracking-widest ${status === 'PASSED' ? 'text-green-400' : 'text-red-400'}`}>Status</div>
-            </div>
-          </div>
 
-          <div className="space-y-4">
-            <Button 
-              onClick={() => setIsExamStarted(false)} 
-              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-black h-14 rounded-2xl shadow-lg"
-            >
-              Back to Exams
-            </Button>
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/student')} 
-              className="w-full font-bold text-gray-500"
-            >
-              Go to Dashboard
-            </Button>
-          </div>
-        </Card>
+            <div className="flex gap-4">
+              <Button 
+                onClick={() => setIsExamStarted(false)} 
+                className="flex-1 bg-violet-600 hover:bg-violet-700 text-white font-black h-14 rounded-2xl shadow-lg"
+              >
+                Back to Exams
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/student')} 
+                className="flex-1 font-bold text-gray-500 h-14 rounded-2xl"
+              >
+                Go to Dashboard
+              </Button>
+            </div>
+          </Card>
+
+          <Card className="border-none shadow-xl rounded-[2.5rem] bg-white overflow-hidden">
+            <CardHeader className="p-8 border-b border-violet-50">
+              <CardTitle className="text-2xl font-black text-gray-900">Review Answers</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <ScrollArea className="h-[600px] p-8">
+                <div className="space-y-8">
+                  {activeQuestions.map((q, idx) => {
+                    const userAnswer = answers[idx];
+                    const isCorrect = userAnswer === q.correct;
+                    return (
+                      <div key={idx} className="p-6 rounded-3xl border border-violet-50 bg-violet-50/30">
+                        <div className="flex items-start justify-between gap-4 mb-4">
+                          <h3 className="font-black text-gray-900 leading-tight">
+                            {idx + 1}. {q.question}
+                          </h3>
+                          {isCorrect ? (
+                            <CheckCircle2 className="h-6 w-6 text-green-500 shrink-0" />
+                          ) : (
+                            <XCircle className="h-6 w-6 text-red-500 shrink-0" />
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          <div className={`p-3 rounded-xl text-sm font-bold ${isCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                            Your Answer: {userAnswer || "Not Answered"}
+                          </div>
+                          {!isCorrect && (
+                            <div className="p-3 rounded-xl text-sm font-bold bg-green-100 text-green-700">
+                              Correct Answer: {q.correct}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }
