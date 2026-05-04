@@ -24,6 +24,19 @@ const CATEGORIES = ["All", "Mathematics", "Physics", "Chemistry", "Biology", "En
 
 const COURSES = [
   {
+    id: 101,
+    title: "CCC Final Exam (Official)",
+    instructor: "NIELIT Certified",
+    category: "Computer",
+    rating: 4.9,
+    students: "45k",
+    duration: "90 Mins",
+    price: "₹20",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
+    level: "Certification",
+    isExam: true
+  },
+  {
     id: 1,
     title: "Quantum Mechanics Mastery",
     instructor: "Dr. Sarah Chen",
@@ -48,30 +61,6 @@ const COURSES = [
     level: "Intermediate"
   },
   {
-    id: 3,
-    title: "Organic Chemistry Simplified",
-    instructor: "Dr. Amit Shah",
-    category: "Chemistry",
-    rating: 4.7,
-    students: "5.1k",
-    duration: "15h 30m",
-    price: "₹1,499",
-    image: "https://images.unsplash.com/photo-1532187875605-1ef6c237ddc4?auto=format&fit=crop&q=80&w=800",
-    level: "Beginner"
-  },
-  {
-    id: 4,
-    title: "Python for Young Scientists",
-    instructor: "Tech Mentor Leo",
-    category: "Coding",
-    rating: 4.9,
-    students: "15.3k",
-    duration: "12h 00m",
-    price: "Free",
-    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&q=80&w=800",
-    level: "Beginner"
-  },
-  {
     id: 7,
     title: "CCC: Computer Concepts Mastery",
     instructor: "Prof. Alok Mishra",
@@ -82,30 +71,6 @@ const COURSES = [
     price: "₹1,700",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800",
     level: "Beginner"
-  },
-  {
-    id: 5,
-    title: "Advanced English Literature",
-    instructor: "Ms. Elena Gilbert",
-    category: "English",
-    rating: 4.6,
-    students: "3.4k",
-    duration: "20h 10m",
-    price: "₹999",
-    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=800",
-    level: "Advanced"
-  },
-  {
-    id: 6,
-    title: "Molecular Biology Basics",
-    instructor: "Dr. Priya Rai",
-    category: "Biology",
-    rating: 4.8,
-    students: "6.7k",
-    duration: "16h 40m",
-    price: "₹1,799",
-    image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&q=80&w=800",
-    level: "Intermediate"
   }
 ];
 
@@ -126,29 +91,27 @@ const Courses = () => {
     <div className="min-h-screen bg-[#FAFAFF]">
       <SEO 
         title="Explore Courses - Premium Education" 
-        description="Browse our extensive library of premium courses for JEE, NEET, CCC, and more. Learn from expert instructors and master your subjects."
-        keywords="online courses, JEE coaching, NEET preparation, CCC certification, computer courses, physics lessons"
+        description="Browse our extensive library of premium courses for JEE, NEET, CCC, and more."
+        keywords="online courses, JEE coaching, NEET preparation, CCC certification"
       />
       <Navbar />
       
       <main className="pt-32 pb-20 px-4 max-w-7xl mx-auto">
-        {/* Header Section */}
         <div className="mb-12 text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
             Explore Our <span className="text-gradient">Premium Courses</span>
           </h1>
           <p className="text-gray-500 font-medium text-lg max-w-2xl">
-            Discover world-class education tailored for your success. From foundational basics to advanced mastery.
+            Discover world-class education tailored for your success.
           </p>
         </div>
 
-        {/* Search and Filter Bar */}
         <div className="flex flex-col md:flex-row gap-6 mb-12 items-center justify-between">
           <div className="relative w-full md:w-96 group">
             <Search className="absolute left-4 top-3.5 h-5 w-5 text-gray-400 group-focus-within:text-violet-600 transition-colors" />
             <Input 
               placeholder="Search courses, instructors..." 
-              className="pl-12 h-12 rounded-2xl border-violet-100 bg-white shadow-sm focus:ring-violet-500 focus:border-violet-500 font-medium"
+              className="pl-12 h-12 rounded-2xl border-violet-100 bg-white shadow-sm font-medium"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -172,10 +135,9 @@ const Courses = () => {
           </div>
         </div>
 
-        {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredCourses.map((course) => (
-            <Card key={course.id} className="group border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl hover:scale-[1.02] transition-all duration-500">
+            <Card key={course.id} className={`group border-none shadow-xl shadow-violet-100/50 rounded-[2rem] overflow-hidden bg-white/80 backdrop-blur-xl hover:scale-[1.02] transition-all duration-500 ${course.isExam ? 'ring-2 ring-violet-500' : ''}`}>
               <div className="relative h-52 overflow-hidden">
                 <img 
                   src={course.image} 
@@ -187,9 +149,13 @@ const Courses = () => {
                     {course.category}
                   </Badge>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <PlayCircle className="text-white h-16 w-16" />
-                </div>
+                {course.isExam && (
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-violet-600 text-white font-bold border-none px-3 py-1 rounded-lg">
+                      EXAM
+                    </Badge>
+                  </div>
+                )}
               </div>
               
               <CardContent className="p-6">
@@ -226,10 +192,10 @@ const Courses = () => {
                 <div className="flex gap-2">
                   <Button 
                     variant="outline"
-                    onClick={() => navigate(`/course/${course.id}`)}
+                    onClick={() => navigate(course.isExam ? '/student/exam' : `/course/${course.id}`)}
                     className="rounded-xl font-bold border-violet-100 text-violet-600 hover:bg-violet-50"
                   >
-                    Details
+                    {course.isExam ? 'View' : 'Details'}
                   </Button>
                   <Button 
                     onClick={() => setPurchaseCourse(course)}
@@ -242,23 +208,6 @@ const Courses = () => {
             </Card>
           ))}
         </div>
-
-        {filteredCourses.length === 0 && (
-          <div className="text-center py-20">
-            <div className="bg-violet-50 w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6">
-              <BookOpen className="h-10 w-10 text-violet-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">No courses found</h3>
-            <p className="text-gray-500">Try adjusting your search or filters to find what you're looking for.</p>
-            <Button 
-              variant="link" 
-              className="mt-4 text-violet-600 font-bold"
-              onClick={() => { setSelectedCategory("All"); setSearchQuery(""); }}
-            >
-              Clear all filters
-            </Button>
-          </div>
-        )}
       </main>
 
       {purchaseCourse && (
