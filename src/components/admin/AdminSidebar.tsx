@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { LayoutDashboard, Users, BookOpen, CreditCard, Bell, Settings, Handshake } from "lucide-react";
+import { LayoutDashboard, Users, BookOpen, CreditCard, Bell, Settings, Handshake, Newspaper } from "lucide-react";
 
 interface AdminSidebarProps {
   activeTab: string;
@@ -14,6 +14,7 @@ const AdminSidebar = ({ activeTab, setActiveTab }: AdminSidebarProps) => {
     { icon: <Users size={20} />, label: "Students" },
     { icon: <Handshake size={20} />, label: "Partners" },
     { icon: <BookOpen size={20} />, label: "Courses" },
+    { icon: <Newspaper size={20} />, label: "Blog" },
     { icon: <CreditCard size={20} />, label: "Subscriptions" },
     { icon: <Bell size={20} />, label: "Notifications" },
     { icon: <Settings size={20} />, label: "Settings" },

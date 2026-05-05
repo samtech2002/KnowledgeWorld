@@ -8,6 +8,7 @@ import StudentsTab from '@/components/admin/StudentsTab';
 import PartnersTab from '@/components/admin/PartnersTab';
 import CoursesTab from '@/components/admin/CoursesTab';
 import SubscriptionsTab from '@/components/admin/SubscriptionsTab';
+import BlogTab from '@/components/admin/BlogTab';
 import { showSuccess } from "@/utils/toast";
 
 const INITIAL_COURSES = [
@@ -208,6 +209,7 @@ const AdminDashboard = () => {
               onDeleteCourse={handleDeleteCourse} 
             />
           )}
+          {activeTab === "Blog" && <BlogTab />}
           {activeTab === "Subscriptions" && (
             <SubscriptionsTab 
               subscriptions={subscriptions} 
