@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Menu, X, Zap, BookOpen, FileText, MessageSquare, Newspaper } from "lucide-react";
 import Logo from "@/components/Logo";
+import WeatherWidget from "@/components/WeatherWidget";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -14,9 +15,12 @@ const Navbar = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          <Link to="/">
-            <Logo />
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link to="/">
+              <Logo />
+            </Link>
+            <WeatherWidget />
+          </div>
           
           <div className="hidden md:flex items-center gap-8">
             <Link to="/" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors">Home</Link>
