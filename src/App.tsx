@@ -11,6 +11,7 @@ import Syllabus from "./pages/Syllabus";
 import Resources from "./pages/Resources";
 import Blog from "./pages/Blog";
 import BlogPostDetails from "./pages/BlogPostDetails";
+import Contact from "./pages/Contact";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import CreateCourse from "./pages/teacher/CreateCourse";
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/resources" element={<Resources />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPostDetails />} />
+          <Route path="/contact" element={<Contact />} />
           
           {/* Role-based Dashboards */}
           <Route path="/admin/*" element={<AdminDashboard />} />
