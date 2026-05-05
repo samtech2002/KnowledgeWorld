@@ -1,6 +1,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SEO from "@/components/SEO";
+import HeroCarousel from "@/components/HeroCarousel";
 import { Button } from "@/components/ui/button";
 import { 
   BookOpen, 
@@ -22,41 +23,13 @@ const Index = () => {
       />
       <Navbar />
       
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-32 px-4 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-violet-200/40 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl animate-pulse delay-700"></div>
-        </div>
+      {/* Hero Section with Carousel */}
+      <HeroCarousel />
 
-        <div className="max-w-7xl mx-auto text-center relative">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-violet-100 text-violet-600 text-sm font-bold mb-8 animate-bounce">
-            <Sparkles className="h-4 w-4" />
-            Next-Gen Learning Experience
-          </div>
-          <h1 className="text-6xl md:text-8xl font-black text-gray-900 mb-8 tracking-tight leading-[1.1]">
-            Elevate Your <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 via-fuchsia-500 to-cyan-500">
-              Future Potential
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-12 leading-relaxed font-medium">
-            KnowledgeWorld.in combines cutting-edge technology with India's top educators to deliver a learning experience that's as effective as it is engaging.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link to="/courses">
-              <Button size="lg" className="bg-violet-600 hover:bg-violet-700 text-white px-10 h-16 text-xl font-bold rounded-2xl shadow-2xl shadow-violet-200 transition-all hover:scale-105">
-                Start Free Trial <Rocket className="ml-2 h-6 w-6" />
-              </Button>
-            </Link>
-            <Link to="/courses">
-              <Button size="lg" variant="outline" className="px-10 h-16 text-xl font-bold rounded-2xl border-2 border-violet-100 bg-white hover:bg-violet-50 transition-all">
-                Explore Courses
-              </Button>
-            </Link>
-          </div>
-          
-          <div className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-12 max-w-5xl mx-auto">
+      {/* Stats Section */}
+      <section className="py-16 bg-white border-b border-violet-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {[
               { label: "Active Students", value: "50k+" },
               { label: "Expert Mentors", value: "200+" },
