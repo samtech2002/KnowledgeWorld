@@ -12,7 +12,7 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import BlogEditor from "./BlogEditor";
+import BlogEditor from "@/components/blog/BlogEditor";
 import { MOCK_POSTS } from "@/pages/Blog";
 
 const BlogTab = () => {
