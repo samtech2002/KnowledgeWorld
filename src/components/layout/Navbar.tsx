@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { GraduationCap, Menu, X, Zap, BookOpen, FileText } from "lucide-react";
+import { Menu, X, Zap, BookOpen, FileText } from "lucide-react";
+import Logo from "@/components/Logo";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -13,13 +14,8 @@ const Navbar = () => {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          <Link to="/" className="flex items-center gap-2 group cursor-pointer">
-            <div className="p-2 bg-gradient-to-br from-violet-600 to-cyan-500 rounded-xl shadow-lg shadow-violet-200 group-hover:scale-110 transition-transform">
-              <GraduationCap className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-cyan-600">
-              KNOWLEDGEWORLD
-            </span>
+          <Link to="/">
+            <Logo />
           </Link>
           
           <div className="hidden md:flex items-center gap-8">

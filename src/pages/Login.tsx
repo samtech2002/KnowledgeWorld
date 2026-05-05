@@ -5,9 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GraduationCap, Mail, Lock, ArrowLeft, ShieldCheck } from "lucide-react";
+import { Mail, Lock, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { showSuccess } from "@/utils/toast";
+import Logo from "@/components/Logo";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,9 +36,7 @@ const Login = () => {
       <Card className="w-full max-w-md border-none shadow-2xl shadow-violet-100/50 rounded-[2.5rem] bg-white/80 backdrop-blur-xl relative z-10">
         <CardHeader className="text-center space-y-2 pt-10">
           <div className="flex justify-center mb-4">
-            <div className="p-4 bg-gradient-to-br from-violet-600 to-cyan-500 rounded-[1.5rem] shadow-xl shadow-violet-200">
-              <GraduationCap className="h-10 w-10 text-white" />
-            </div>
+            <Logo iconSize={32} textSize="text-3xl" showText={false} />
           </div>
           <CardTitle className="text-3xl font-black tracking-tight text-gray-900">Welcome Back</CardTitle>
           <CardDescription className="text-gray-500 font-medium">Access your personalized portal</CardDescription>

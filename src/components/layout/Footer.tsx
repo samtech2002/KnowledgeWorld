@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GraduationCap, Twitter, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
+import { Twitter, Linkedin, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react";
 import { MadeWithDyad } from "@/components/made-with-dyad";
+import Logo from "@/components/Logo";
 
 const Footer = () => {
   return (
@@ -10,13 +11,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <div className="space-y-6">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="p-2 bg-gradient-to-br from-violet-600 to-cyan-500 rounded-xl shadow-lg shadow-violet-200 group-hover:scale-110 transition-transform">
-                <GraduationCap className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-cyan-600">
-                KNOWLEDGEWORLD
-              </span>
+            <Link to="/">
+              <Logo />
             </Link>
             <p className="text-gray-500 font-medium leading-relaxed">
               Empowering the next generation of innovators through world-class education and cutting-edge technology.
