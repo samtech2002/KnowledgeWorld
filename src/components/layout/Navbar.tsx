@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Menu, X, Zap, BookOpen, FileText, MessageSquare } from "lucide-react";
+import { Menu, X, Zap, BookOpen, FileText, MessageSquare, Newspaper } from "lucide-react";
 import Logo from "@/components/Logo";
 
 const Navbar = () => {
@@ -27,6 +27,9 @@ const Navbar = () => {
             </Link>
             <Link to="/contact" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors flex items-center gap-1.5">
               <MessageSquare className="h-4 w-4" /> Contact
+            </Link>
+            <Link to="/blog" className="text-gray-600 hover:text-violet-600 font-semibold transition-colors flex items-center gap-1.5">
+              <Newspaper className="h-4 w-4" /> Blog
             </Link>
             <Link to="/login">
               <Button variant="ghost" className="text-violet-600 hover:bg-violet-100/50 font-bold">
@@ -56,6 +59,7 @@ const Navbar = () => {
           <Link to="/syllabus" className="block text-lg font-bold text-gray-800">Syllabus</Link>
           <Link to="/resources" className="block text-lg font-bold text-gray-800">Resources</Link>
           <Link to="/contact" className="block text-lg font-bold text-gray-800">Contact</Link>
+          <Link to="/blog" className="block text-lg font-bold text-gray-800">Blog</Link>
           <Link to="/login" className="block text-lg font-bold text-violet-600">Login</Link>
           <Link to="/courses" className="block">
             <Button className="w-full bg-gradient-to-r from-violet-600 to-cyan-600 text-white font-bold h-12 rounded-xl">Get Started</Button>
