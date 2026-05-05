@@ -17,7 +17,8 @@ import {
   Monitor,
   Video,
   Play,
-  X
+  X,
+  Globe
 } from "lucide-react";
 
 const SYLLABUS_DATA = {
@@ -69,6 +70,13 @@ const SYLLABUS_DATA = {
       { unit: "Section II: Poetry", topics: ["Song of the Open Road", "Indian Weavers", "The Inchcape Rock", "Have you Earned your Tomorrow", "Father Returning Home", "Money", "She Walks in Beauty", "Small Towns and Rivers"] },
       { unit: "Section III: Writing Skills", topics: ["Summary Writing", "Do Schools Kill Creativity?", "Note-Making", "Statement of Purpose", "Drafting a Virtual Message", "Group Discussion"] },
       { unit: "Section IV: Genre-Novel", topics: ["History of Novel", "To Sir, with Love", "Around the World in Eighty Days", "The Sign of Four"] }
+    ],
+    "Geography": [
+      { unit: "Population", topics: ["Population Part-1", "Population Part-2", "Migration", "Human Development"] },
+      { unit: "Human Settlements", topics: ["Types of Settlements", "Land Use", "Rural-Urban Fringe", "Urbanization"] },
+      { unit: "Economic Activities", topics: ["Primary Economic Activities", "Secondary Economic Activities", "Tertiary Economic Activities", "Quaternary Activities"] },
+      { unit: "Region & Development", topics: ["Concept of Region", "Regional Planning", "Regional Imbalance", "Sustainable Development"] },
+      { unit: "Geography: Trends", topics: ["Recent Trends in Geography", "Geographical Information System (GIS)", "Global Positioning System (GPS)", "Careers in Geography"] }
     ]
   },
   computer: {
@@ -105,6 +113,10 @@ const VIDEO_LECTURES = {
   "CCC": [
     { title: "Computer Basics for Beginners", duration: "10:00", id: "p7bzE1E5PMY" },
     { title: "Internet & Web Browsing", duration: "15:50", id: "L9X75Xf_6_Y" }
+  ],
+  "Geography": [
+    { title: "World Population Distribution", duration: "18:45", id: "p7bzE1E5PMY" },
+    { title: "Human Settlements & Land Use", duration: "21:10", id: "L9X75Xf_6_Y" }
   ]
 };
 
@@ -126,6 +138,7 @@ const Syllabus = () => {
   const getSubjectIcon = (subject: string) => {
     if (subject.includes("English")) return <Languages className="h-5 w-5" />;
     if (subject === "CCC") return <Monitor className="h-5 w-5" />;
+    if (subject === "Geography") return <Globe className="h-5 w-5" />;
     switch (subject) {
       case "Physics": return <Zap className="h-5 w-5" />;
       case "Chemistry": return <Beaker className="h-5 w-5" />;
