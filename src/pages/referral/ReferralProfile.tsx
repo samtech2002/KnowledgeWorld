@@ -86,7 +86,7 @@ const ReferralProfile = () => {
                 </div>
                 <div className="space-y-2">
                   <Label className="font-bold text-gray-700">Phone Number</Label>
-                  <Input defaultValue="+91 98765 43210" className="h-12 rounded-xl border-violet-100" />
+                  <Input defaultValue="+91 8888000330" className="h-12 rounded-xl border-violet-100" />
                 </div>
               </CardContent>
             </Card>
