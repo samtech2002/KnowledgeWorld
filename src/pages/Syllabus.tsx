@@ -71,7 +71,14 @@ const SYLLABUS_DATA = {
       { unit: "Section III: Writing Skills", topics: ["Summary Writing", "Do Schools Kill Creativity?", "Note-Making", "Statement of Purpose", "Drafting a Virtual Message", "Group Discussion"] },
       { unit: "Section IV: Genre-Novel", topics: ["History of Novel", "To Sir, with Love", "Around the World in Eighty Days", "The Sign of Four"] }
     ],
-    "Geography": [
+    "Geography 11th": [
+      { unit: "Earth's Interior", topics: ["Earth's Movements", "Interior of the Earth", "Rocks and Minerals"] },
+      { unit: "Weathering & Erosion", topics: ["Weathering", "Mass Wasting", "Agents of Erosion - Water", "Agents of Erosion - Wind", "Agents of Erosion - Glaciers"] },
+      { unit: "Climatic Regions", topics: ["Atmospheric Pressure", "Winds", "Climatic Regions of the World"] },
+      { unit: "Oceanography", topics: ["Ocean Floor", "Salinity", "Ocean Currents"] },
+      { unit: "Biomes", topics: ["Terrestrial Biomes", "Aquatic Biomes", "Biodiversity"] }
+    ],
+    "Geography 12th": [
       { unit: "Population", topics: ["Population Part-1", "Population Part-2", "Migration", "Human Development"] },
       { unit: "Human Settlements", topics: ["Types of Settlements", "Land Use", "Rural-Urban Fringe", "Urbanization"] },
       { unit: "Economic Activities", topics: ["Primary Economic Activities", "Secondary Economic Activities", "Tertiary Economic Activities", "Quaternary Activities"] },
@@ -114,7 +121,11 @@ const VIDEO_LECTURES = {
     { title: "Computer Basics for Beginners", duration: "10:00", id: "p7bzE1E5PMY" },
     { title: "Internet & Web Browsing", duration: "15:50", id: "L9X75Xf_6_Y" }
   ],
-  "Geography": [
+  "Geography 11th": [
+    { title: "Earth's Interior & Rocks", duration: "20:15", id: "p7bzE1E5PMY" },
+    { title: "Weathering Processes", duration: "18:30", id: "L9X75Xf_6_Y" }
+  ],
+  "Geography 12th": [
     { title: "World Population Distribution", duration: "18:45", id: "p7bzE1E5PMY" },
     { title: "Human Settlements & Land Use", duration: "21:10", id: "L9X75Xf_6_Y" }
   ]
@@ -138,7 +149,7 @@ const Syllabus = () => {
   const getSubjectIcon = (subject: string) => {
     if (subject.includes("English")) return <Languages className="h-5 w-5" />;
     if (subject === "CCC") return <Monitor className="h-5 w-5" />;
-    if (subject === "Geography") return <Globe className="h-5 w-5" />;
+    if (subject.includes("Geography")) return <Globe className="h-5 w-5" />;
     switch (subject) {
       case "Physics": return <Zap className="h-5 w-5" />;
       case "Chemistry": return <Beaker className="h-5 w-5" />;
