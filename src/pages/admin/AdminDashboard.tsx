@@ -5,6 +5,7 @@ import AdminSidebar from '@/components/admin/AdminSidebar';
 import AdminHeader from '@/components/admin/AdminHeader';
 import OverviewTab from '@/components/admin/OverviewTab';
 import StudentsTab from '@/components/admin/StudentsTab';
+import TeachersTab from '@/components/admin/TeachersTab';
 import PartnersTab from '@/components/admin/PartnersTab';
 import CoursesTab from '@/components/admin/CoursesTab';
 import SubscriptionsTab from '@/components/admin/SubscriptionsTab';
@@ -18,6 +19,13 @@ const INITIAL_COURSES = [
   { id: 2, title: "Calculus: From Zero to Hero", instructor: "Prof. Rajesh Kumar", category: "Mathematics", price: "1999", students: 8200, status: "Active" },
   { id: 7, title: "CCC: Computer Concepts Mastery", instructor: "Prof. Alok Mishra", category: "Computer", price: "1700", students: 20100, status: "Active" },
   { id: 3, title: "Organic Chemistry Simplified", instructor: "Dr. Amit Shah", category: "Chemistry", price: "0", students: 5100, status: "Draft" },
+];
+
+const INITIAL_TEACHERS = [
+  { id: 1, name: "Dr. Sarah Chen", email: "sarah@example.com", subject: "Physics", rating: "4.9", students: 12500, courses: 3, status: "Active", joinDate: "2023-05-10" },
+  { id: 2, name: "Prof. Rajesh Kumar", email: "rajesh@example.com", subject: "Mathematics", rating: "4.8", students: 8200, courses: 2, status: "Active", joinDate: "2023-06-15" },
+  { id: 3, name: "Prof. Alok Mishra", email: "alok@example.com", subject: "Computer", rating: "4.8", students: 20100, courses: 4, status: "Active", joinDate: "2023-08-20" },
+  { id: 4, name: "Dr. Amit Shah", email: "amit@example.com", subject: "Chemistry", rating: "4.7", students: 5100, courses: 1, status: "Active", joinDate: "2023-09-01" },
 ];
 
 const INITIAL_STUDENTS = [
@@ -101,6 +109,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("Overview");
   const [courses, setCourses] = useState(INITIAL_COURSES);
   const [students, setStudents] = useState(INITIAL_STUDENTS);
+  const [teachers, setTeachers] = useState(INITIAL_TEACHERS);
   const [partners, setPartners] = useState(INITIAL_PARTNERS);
   const [searchQuery, setSearchQuery] = useState("");
   
@@ -194,6 +203,12 @@ const AdminDashboard = () => {
               students={students} 
               searchQuery={searchQuery} 
               onRegisterStudent={handleRegisterStudent} 
+            />
+          )}
+          {activeTab === "Teachers" && (
+            <TeachersTab 
+              teachers={teachers} 
+              searchQuery={searchQuery} 
             />
           )}
           {activeTab === "Partners" && (
