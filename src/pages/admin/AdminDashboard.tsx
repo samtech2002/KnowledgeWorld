@@ -9,6 +9,8 @@ import PartnersTab from '@/components/admin/PartnersTab';
 import CoursesTab from '@/components/admin/CoursesTab';
 import SubscriptionsTab from '@/components/admin/SubscriptionsTab';
 import BlogTab from '@/components/admin/BlogTab';
+import SettingsTab from '@/components/admin/SettingsTab';
+import NotificationsTab from '@/components/admin/NotificationsTab';
 import { showSuccess } from "@/utils/toast";
 
 const INITIAL_COURSES = [
@@ -217,6 +219,8 @@ const AdminDashboard = () => {
               onSave={handleSaveSubscriptions} 
             />
           )}
+          {activeTab === "Notifications" && <NotificationsTab />}
+          {activeTab === "Settings" && <SettingsTab />}
         </div>
       </main>
     </div>
