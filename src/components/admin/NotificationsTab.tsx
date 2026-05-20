@@ -14,7 +14,11 @@ import {
   Zap,
   Plus,
   Edit3,
-  CheckCircle2
+  CheckCircle2,
+  History,
+  Server,
+  ShieldCheck,
+  Smartphone
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,8 +39,8 @@ import { showSuccess } from "@/utils/toast";
 
 const NotificationsTab = () => {
   const [notifications, setNotifications] = useState([
-    { id: 1, title: "New Course Launch", message: "Quantum Mechanics Mastery is now live!", target: "All Students", date: "2 hours ago" },
-    { id: 2, title: "System Maintenance", message: "Scheduled maintenance on Sunday at 2 AM.", target: "All Users", date: "1 day ago" },
+    { id: 1, title: "New Course Launch", message: "Quantum Mechanics Mastery is now live!", target: "All Students", date: "2 hours ago", type: "Announcement" },
+    { id: 2, title: "System Maintenance", message: "Scheduled maintenance on Sunday at 2 AM.", target: "All Users", date: "1 day ago", type: "System" },
   ]);
 
   const [templates, setTemplates] = useState([
@@ -52,7 +56,8 @@ const NotificationsTab = () => {
       title: formData.get('title') as string,
       message: formData.get('message') as string,
       target: formData.get('target') as string,
-      date: "Just now"
+      date: "Just now",
+      type: "Announcement"
     };
     setNotifications([newNotif, ...notifications]);
     (e.target as HTMLFormElement).reset();
@@ -72,7 +77,7 @@ const NotificationsTab = () => {
       </div>
 
       <Tabs defaultValue="announcements" className="space-y-8">
-        <TabsList className="bg-violet-50/50 p-1.5 rounded-2xl inline-flex">
+        <TabsList className="bg-violet-50/50 p-1.5 rounded-2xl inline-flex flex-wrap">
           <TabsTrigger value="announcements" className="rounded-xl font-bold px-6 data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">
             <Megaphone className="mr-2 h-4 w-4" /> Announcements
           </TabsTrigger>
@@ -80,7 +85,13 @@ const NotificationsTab = () => {
             <FileText className="mr-2 h-4 w-4" /> Templates
           </TabsTrigger>
           <TabsTrigger value="automated" className="rounded-xl font-bold px-6 data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">
-            <Zap className="mr-2 h-4 w-4" /> Automated Alerts
+            <Zap className="mr-2 h-4 w-4" /> Automated
+          </TabsTrigger>
+          <TabsTrigger value="logs" className="rounded-xl font-bold px-6 data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">
+            <History className="mr-2 h-4 w-4" /> Logs
+          </TabsTrigger>
+          <TabsTrigger value="config" className="rounded-xl font-bold px-6 data-[state=active]:bg-white data-[state=active]:text-violet-600 data-[state=active]:shadow-sm">
+            <Server className="mr-2 h-4 w-4" /> Configuration
           </TabsTrigger>
         </TabsList>
 
@@ -125,9 +136,9 @@ const NotificationsTab = () => {
 
             <div className="lg:col-span-2 space-y-6">
               <h2 className="text-2xl font-black text-gray-900 flex items-center gap-2">
-                <Bell className="h-6 w-6 text-violet-600" /> Sent History
+                <Bell className="h-6 w-6 text-violet-600" /> Recent Announcements
               </h2>
-              {notifications.map((notif) => (
+              {notifications.filter(n => n.type === 'Announcement').map((notif) => (
                 <Card key={notif.id} className="border-none shadow-lg shadow-violet-100/30 rounded-[2rem] bg-white/80 backdrop-blur-xl group">
                   <CardContent className="p-8">
                     <div className="flex justify-between items-start mb-4">
@@ -221,6 +232,144 @@ const NotificationsTab = () => {
               ))}
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="logs">
+          <Card className="border-none shadow-xl shadow-violet-100/30 rounded-[2.5rem] overflow-hidden bg-white/80 backdrop-blur-xl">
+            <div className="p-8 border-b border-violet-50 flex justify-between items-center">
+              <h3 className="text-xl font-black text-gray-900">Notification Audit Trail</h3>
+              <Button variant="outline" size="sm" className="rounded-xl font-bold border-violet-100 text-gray-500">
+                <History className="mr-2 h-4 w-4" /> Clear Logs
+              </Button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-violet-50/50">
+                    <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Recipient</th>
+                    <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Type</th>
+                    <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Subject</th>
+                    <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Status</th>
+                    <th className="p-6 text-xs font-black text-gray-400 uppercase tracking-widest">Time</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-violet-50">
+                  {[
+                    { user: "aryan@example.com", type: "Email", subject: "Welcome to KnowledgeWorld", status: "Delivered", time: "2 mins ago" },
+                    { user: "priya@example.com", type: "Push", subject: "New Course: CCC Mastery", status: "Sent", time: "15 mins ago" },
+                    { user: "rahul@example.com", type: "Email", subject: "Subscription Expiring", status: "Failed", time: "1 hour ago" },
+                  ].map((log, i) => (
+                    <tr key={i} className="hover:bg-violet-50/30 transition-colors">
+                      <td className="p-6 font-bold text-gray-700">{log.user}</td>
+                      <td className="p-6">
+                        <Badge variant="secondary" className="bg-violet-50 text-violet-600 border-none font-bold">{log.type}</Badge>
+                      </td>
+                      <td className="p-6 font-medium text-gray-500">{log.subject}</td>
+                      <td className="p-6">
+                        <div className={`flex items-center gap-2 text-xs font-black uppercase tracking-wider ${log.status === 'Delivered' ? 'text-green-600' : log.status === 'Failed' ? 'text-red-500' : 'text-blue-600'}`}>
+                          <div className={`h-2 w-2 rounded-full ${log.status === 'Delivered' ? 'bg-green-500' : log.status === 'Failed' ? 'bg-red-500' : 'bg-blue-500'}`}></div>
+                          {log.status}
+                        </div>
+                      </td>
+                      <td className="p-6 text-xs font-bold text-gray-400">{log.time}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="config">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="border-none shadow-xl shadow-violet-100/30 rounded-[2.5rem] bg-white/80 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-xl font-black flex items-center gap-2">
+                  <Mail className="h-5 w-5 text-violet-600" /> SMTP Settings
+                </CardTitle>
+                <CardDescription>Configure your outgoing email server.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="font-bold ml-1">SMTP Host</Label>
+                  <Input placeholder="smtp.gmail.com" className="h-12 rounded-xl border-violet-100" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="font-bold ml-1">Port</Label>
+                    <Input placeholder="587" className="h-12 rounded-xl border-violet-100" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="font-bold ml-1">Encryption</Label>
+                    <Select defaultValue="tls">
+                      <SelectTrigger className="h-12 rounded-xl border-violet-100">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-xl border-violet-50">
+                        <SelectItem value="tls">TLS</SelectItem>
+                        <SelectItem value="ssl">SSL</SelectItem>
+                        <SelectItem value="none">None</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="font-bold ml-1">Username</Label>
+                  <Input placeholder="notifications@knowledgeworld.in" className="h-12 rounded-xl border-violet-100" />
+                </div>
+                <div className="space-y-2">
+                  <Label className="font-bold ml-1">Password</Label>
+                  <Input type="password" placeholder="••••••••••••" className="h-12 rounded-xl border-violet-100" />
+                </div>
+                <Button onClick={() => showSuccess("SMTP settings saved!")} className="w-full bg-violet-600 hover:bg-violet-700 text-white font-black h-12 rounded-xl mt-4">
+                  Save & Test Connection
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-none shadow-xl shadow-violet-100/30 rounded-[2.5rem] bg-white/80 backdrop-blur-xl">
+              <CardHeader>
+                <CardTitle className="text-xl font-black flex items-center gap-2">
+                  <Smartphone className="h-5 w-5 text-violet-600" /> Push Notifications
+                </CardTitle>
+                <CardDescription>Connect to Firebase or OneSignal.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="font-bold ml-1">Provider</Label>
+                  <Select defaultValue="firebase">
+                    <SelectTrigger className="h-12 rounded-xl border-violet-100">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-violet-50">
+                      <SelectItem value="firebase">Firebase (FCM)</SelectItem>
+                      <SelectItem value="onesignal">OneSignal</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="font-bold ml-1">Server Key / API Key</Label>
+                  <Input type="password" placeholder="AIzaSy..." className="h-12 rounded-xl border-violet-100" />
+                </div>
+                <div className="space-y-2">
+                  <Label className="font-bold ml-1">App ID</Label>
+                  <Input placeholder="1:123456789:web:..." className="h-12 rounded-xl border-violet-100" />
+                </div>
+                <div className="p-4 bg-violet-50 rounded-2xl border border-violet-100 mt-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <ShieldCheck className="h-5 w-5 text-violet-600" />
+                      <span className="text-sm font-bold text-gray-700">Enable Web Push</span>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                </div>
+                <Button onClick={() => showSuccess("Push configuration updated!")} className="w-full bg-violet-600 hover:bg-violet-700 text-white font-black h-12 rounded-xl mt-4">
+                  Update Configuration
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
