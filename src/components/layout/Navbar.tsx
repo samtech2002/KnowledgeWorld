@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Menu, X, Zap, BookOpen, FileText, MessageSquare, Newspaper } from "lucide-react";
 import Logo from "@/components/Logo";
-import WeatherWidget from "@/components/WeatherWidget";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -19,7 +18,6 @@ const Navbar = () => {
             <Link to="/">
               <Logo />
             </Link>
-            <WeatherWidget />
           </div>
           
           <div className="hidden md:flex items-center gap-8">
